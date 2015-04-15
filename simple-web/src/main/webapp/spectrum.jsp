@@ -15,13 +15,21 @@
     <body>
         <h1>Spectrum</h1>
         ok
+        <c:set var="usr" value="maks" scope="page"/>
+        ${2+5}
+        ${usr}
+        ${param.action}
+        
+     
+        
               <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}" varStatus = "loopCounter">
 
-
-                    <tr>
+${loopCounter.count}
+<!--                    <tr>
                         <td>${loopCounter.count}</td>
 
-                    </tr>
+                    </tr>-->
 </c:forEach> 
+
     </body>
 </html>
