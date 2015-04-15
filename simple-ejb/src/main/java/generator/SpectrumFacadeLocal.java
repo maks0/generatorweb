@@ -28,5 +28,6 @@ public interface SpectrumFacadeLocal {
     List<Spectrum> findRange(int[] range);
 
     int count();
+    List<Spectrum> findPage(int pageNumber, int paginationStep);
     
 }

@@ -19,19 +19,18 @@
     thead{
         font-style: italic;
         background-color: paleturquoise;
+        border: 1px blue solid;
     }
     table{
-        margin: auto;
-        border: 1px blue solid;
-        font-family: Colibri;
-        background-color: lightblue;
+        margin: auto;     
+        font-family: Colibri;       
 /*        width: 95%;*/
         text-align: center;
     }
-
-
-
- 
+    .spectrumtable{
+        background-color: lightblue;
+        border: 1px blue solid;
+    }
     .center{
         text-align: center;
     }
@@ -52,7 +51,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Spectrum</title>
     </head>
-    <body>
+    <body class="spectrumtable">
         <h1>Spectrum</h1>
         <table>
             <thead>
@@ -70,5 +69,20 @@
             </c:forEach> 
         </tbody>
     </table>
+        <table>
+            <td class="navigationButtonsTable">
+                <a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a>
+            </td>
+            <td class="navigationButtonsTable">
+                <a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a>
+            </td>
+            <td class="navigationButtonsTable"> ${param.page} </td>
+            <td class="navigationButtonsTable">
+                <a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a>
+            </td>
+            <td class="navigationButtonsTable">
+                <a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a>
+            </td>
+        </table>
 </body>
 </html>

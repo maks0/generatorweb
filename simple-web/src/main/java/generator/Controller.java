@@ -20,8 +20,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Controller", urlPatterns = {"/controller", "/index.html"})
 public class Controller extends HttpServlet {
+
     @EJB
-	private SpectrumFacadeLocal spectrumFacade;
+    private SpectrumFacadeLocal spectrumFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,10 +37,50 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        //Container <Spectrum> spectrum = new TypedContainer<Spectrum>();
+
+        int paginationStep = (int) toLong(request.getParameter("paginationstep"));
+        if (paginationStep < 5) {
+            paginationStep = 5;
+        } else if (paginationStep > 100) {
+            paginationStep = 100;
+        }
         
-        request.setAttribute("spectrum", new TypedContainer<Spectrum>(spectrumFacade.findAll()));
+        int page = pageValidation(request.getParameter("page"), paginationStep);
+
+        request.setAttribute("spectrum", new TypedContainer<Spectrum>(spectrumFacade.findPage(page, paginationStep)));
         request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp").forward(request, response);
+    }
+
+    private int pageValidation(String pageString, int paginationStep) {
+        int page = (int) toLong(pageString);
+
+        if ("last".equals(pageString)) {
+
+            page = (int) ((spectrumFacade.count() - 1) / paginationStep) + 1;
+
+        } else if (page < 1) {
+            page = 1;
+        } else {
+
+            int lastPage = (int) ((spectrumFacade.count() - 1) / paginationStep) + 1;
+            if (page > lastPage) {
+                page = lastPage;
+            }
+
+        }
+        return page;
+    }
+
+    private long toLong(String intString) {
+        long number;
+        try {
+            number = Long.parseLong(intString);
+        } catch (NumberFormatException e) {
+            number = -1;
+        } catch (NullPointerException e) {
+            number = -1;
+        }
+        return number;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,7 +123,7 @@ public class Controller extends HttpServlet {
     }// </editor-fold>
 
     private void processPostRequest(HttpServletRequest request, HttpServletResponse response) {
-        
+
     }
 
 }
