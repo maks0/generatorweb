@@ -48,7 +48,8 @@ public class Controller extends HttpServlet {
         int page = pageValidation(request.getParameter("page"), paginationStep);
 
         request.setAttribute("spectrum", new TypedContainer<Spectrum>(spectrumFacade.findPage(page, paginationStep)));
-        request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp?page=" + page
+                    + "&paginationstep=" + paginationStep).forward(request, response);
     }
 
     private int pageValidation(String pageString, int paginationStep) {
