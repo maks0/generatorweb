@@ -15,13 +15,13 @@
     <body>
         <h1>Spectrum</h1>
         ok
-                <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}" varStatus = "loopCounter">
+        <%--              <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}" varStatus = "loopCounter">
 
 
                     <tr>
                         <td>${loopCounter.count}</td>
 
                     </tr>
-                </c:forEach>
+</c:forEach> --%>
     </body>
 </html>
