@@ -24,7 +24,7 @@
     table{
         margin: auto;     
         font-family: Colibri;       
-/*        width: 95%;*/
+        /*        width: 95%;*/
         text-align: center;
     }
     .spectrumtable{
@@ -59,6 +59,19 @@
             <td>voltage</td>
 
         </thead>
+        <form action = "controller" >
+            <p> Show 
+                <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
+                    <option value="5" ${5 == param.paginationstep ? 'selected="selected"' : ''}> 5 </option>
+                    <option value="10" ${10 == param.paginationstep ? 'selected="selected"' : ''}> 10 </option>
+                    <option value="20" ${20 == param.paginationstep ? 'selected="selected"' : ''}> 20 </option>
+                    <option value="40" ${40 == param.paginationstep ? 'selected="selected"' : ''}> 40 </option>
+                    <option value="60" ${60 == param.paginationstep ? 'selected="selected"' : ''}> 60 </option>
+                </select>
+                records by a page
+            </p>
+            <input type="hidden" name="page" value="1"/>
+        </form>
         <tbody class="spectrumtable">
             <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}">
 
@@ -69,20 +82,20 @@
             </c:forEach> 
         </tbody>
     </table>
-        <table>
-            <td class="navigationButtonsTable">
-                <a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a>
-            </td>
-            <td class="navigationButtonsTable">
-                <a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a>
-            </td>
-            <td class="navigationButtonsTable"> ${param.page} </td>
-            <td class="navigationButtonsTable">
-                <a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a>
-            </td>
-            <td class="navigationButtonsTable">
-                <a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a>
-            </td>
-        </table>
+    <table>
+        <td class="navigationButtonsTable">
+            <a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a>
+        </td>
+        <td class="navigationButtonsTable">
+            <a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a>
+        </td>
+        <td class="navigationButtonsTable"> ${param.page} </td>
+        <td class="navigationButtonsTable">
+            <a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a>
+        </td>
+        <td class="navigationButtonsTable">
+            <a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a>
+        </td>
+    </table>
 </body>
 </html>
