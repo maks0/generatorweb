@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author maks
  */
-@WebServlet(name = "Controller", urlPatterns = {"/Controller"})
+@WebServlet(name = "Controller", urlPatterns = {"/controller", "/index.html"})
 public class Controller extends HttpServlet {
     @EJB
 	private SpectrumFacadeLocal spectrumFacade;
@@ -38,6 +38,7 @@ public class Controller extends HttpServlet {
         //Container <Spectrum> spectrum = new TypedContainer<Spectrum>();
         
         request.setAttribute("spectrum", new TypedContainer<Spectrum>(spectrumFacade.findAll()));
+        request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
