@@ -20,7 +20,7 @@
         ${usr}
         ${param.action}
         
-     
+        <c:if test="${pageScope.usr eq 'maks'}">if works</c:if>
         
               <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}" varStatus = "loopCounter">
 
