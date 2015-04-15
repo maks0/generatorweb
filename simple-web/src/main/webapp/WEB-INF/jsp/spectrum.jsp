@@ -29,6 +29,9 @@
     }
     .spectrumtable{
         background-color: lightblue;
+        
+    }
+    .tableborder{
         border: 1px blue solid;
     }
     .center{
