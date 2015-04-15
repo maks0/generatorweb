@@ -51,7 +51,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Spectrum</title>
     </head>
-    <body class="spectrumtable">
+    <body>
         <h1>Spectrum</h1>
         <table>
             <thead>
@@ -59,7 +59,7 @@
             <td>voltage</td>
 
         </thead>
-        <tbody>
+        <tbody class="spectrumtable">
             <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}">
 
                 <tr>
