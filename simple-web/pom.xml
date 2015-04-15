@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>simple</artifactId>
-    <groupId>generator</groupId>
-    <version>1.0</version>
-  </parent>
+        <artifactId>simple</artifactId>
+        <groupId>generator</groupId>
+        <version>1.0</version>
+    </parent>
 
     <groupId>generator</groupId>
     <artifactId>simple-web</artifactId>
@@ -31,6 +31,11 @@
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet.jstl</groupId>
+            <artifactId>jboss-jstl-api_1.2_spec</artifactId>
+            <version>1.1.2.Final</version>
         </dependency>
     </dependencies>
 
