@@ -24,7 +24,7 @@ public class SpectrumFacade extends AbstractFacade<Spectrum> implements Spectrum
     }
 
     public SpectrumFacade() {
-        super(Spectrum.class);
+ //       super(Spectrum.class);
     }
     
 }
