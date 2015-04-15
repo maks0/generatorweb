@@ -15,8 +15,8 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SpectrumFacade extends AbstractFacade<Spectrum> implements SpectrumFacadeLocal {
-    @PersistenceContext(unitName = "generator_generator-ejb_ejb_1.0PU")
-    private EntityManager em;
+//    @PersistenceContext(unitName = "generator_generator-ejb_ejb_1.0PU")
+    private EntityManager em = null;
 
     @Override
     protected EntityManager getEntityManager() {
