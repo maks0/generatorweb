@@ -1,4 +1,4 @@
- <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%-- 
     Document   : Spectrum
     Created on : 15.04.2015, 17:04:24
@@ -14,22 +14,21 @@
     </head>
     <body>
         <h1>Spectrum</h1>
-        ok
-        <c:set var="usr" value="maks" scope="page"/>
-        ${2+5}
-        ${usr}
-        ${param.action}
-        
-        <c:if test="${pageScope.usr eq 'mak'}">if works</c:if>
-        
-              <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}" varStatus = "loopCounter">
+        <table>
+            <thead>
+            <td>time</td>
+            <td>voltage</td>
 
-${loopCounter.count}
-<!--                    <tr>
-                        <td>${loopCounter.count}</td>
+        </thead>
+        <tbody>
+            <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}" varStatus = "loopCounter">
 
-                    </tr>-->
-</c:forEach> 
-
-    </body>
+                <tr>
+                    <td>${loopCounter.count}</td>
+                    <td>${array.voltage}</td>
+                </tr>
+            </c:forEach> 
+        </tbody>
+    </table>
+</body>
 </html>
