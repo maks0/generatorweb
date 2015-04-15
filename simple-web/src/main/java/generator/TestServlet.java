@@ -49,7 +49,8 @@ public class TestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            out.println("<h1>Servlet TestServlet at " + calc.plus(2, 2)+ "</h1>");
+            out.println("<h1>2+2= " + calc.plus(2, 2)+ "</h1>");
+		out.println("<h1>findall=" + spectrumFacade.findAll()+ "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {
