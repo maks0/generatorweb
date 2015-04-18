@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Spectrum.findAll", query = "SELECT s FROM Spectrum s"),
+    @NamedQuery(name = "Spectrum.findAll", query = "SELECT s FROM Spectrum s ORDER BY s.frequency"),
     @NamedQuery(name = "Spectrum.findById", query = "SELECT s FROM Spectrum s WHERE s.id = :id"),
     @NamedQuery(name = "Spectrum.findByVoltage", query = "SELECT s FROM Spectrum s WHERE s.voltage = :voltage"),
     @NamedQuery(name = "Spectrum.findByFrequency", query = "SELECT s FROM Spectrum s WHERE s.frequency = :frequency")})
