@@ -19,20 +19,21 @@
     thead{
         font-style: italic;
         background-color: paleturquoise;
-        border: 1px blue solid;
+        /*        border: 1px blue solid;*/
     }
     table{
         margin: auto;     
         font-family: Colibri;       
-        /*        width: 95%;*/
+/*        width: 75%;*/
         text-align: center;
     }
     .spectrumtable{
-        background-color: lightblue;
-        
+/*        background-color: lightblue;*/
+        width: 75%;
+
     }
     .tableborder{
-        border: 1px blue solid;
+        border: 1px #d9edf7 solid;
     }
     .center{
         text-align: center;
@@ -53,15 +54,26 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Spectrum</title>
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <h1>Spectrum</h1>
-        <table>
-            <thead>
-            <td>time</td>
-            <td>voltage</td>
 
-        </thead>
+        <c:choose>
+            <c:when test="${sessionScope.user == null}"> 
+                <p>
+                    Hi, quest! Would you like to 
+                    <a href="controller?action=login&page=${param.page}&paginationstep=${param.paginationstep}">login</a> 
+                    <%--         or <a href="controller?action=register&page=${param.page}&paginationstep=${param.paginationstep}">register</a> --%>
+                </p> 
+            </c:when>
+            <c:otherwise>
+                <p>
+                    Hi, ${sessionScope.user.name} 
+                    (<a href="controller?action=logout&page=${param.page}&paginationstep=${param.paginationstep}">logout</a>)
+                </p>
+            </c:otherwise>
+        </c:choose>
         <form action = "controller" >
             <p> Show 
                 <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
@@ -75,18 +87,33 @@
             </p>
             <input type="hidden" name="page" value="1"/>
         </form>
-        <tbody class="spectrumtable">
-            <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}">
 
+<!--        <form action="controller" method="post">
+            <p>
+                <input type="file" name="inputedfile"/>
+                <input type="submit" value="send">
+            </p>
+        </form>-->
+
+
+
+        <table class="table-striped spectrumtable tableborder">
+            <thead>
+            <td>frequency, Hz</td>
+            <td>voltage, V</td>
+        </thead>
+
+        <tbody>
+            <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}">
                 <tr>
-                    <td>${array.time}</td>
+                    <td>${array.frequency}</td>
                     <td>${array.voltage}</td>
                 </tr>
             </c:forEach> 
         </tbody>
     </table>
     <table>
-        <td class="navigationButtonsTable">
+        <td class="pagination">
             <a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a>
         </td>
         <td class="navigationButtonsTable">

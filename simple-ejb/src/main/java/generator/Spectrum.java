@@ -6,15 +6,15 @@
 package generator;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,45 +25,75 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Spectrum.findAll", query = "SELECT s FROM Spectrum s ORDER BY s.time"),
-    @NamedQuery(name = "Spectrum.findByTime", query = "SELECT s FROM Spectrum s WHERE s.time = :time"),
-    @NamedQuery(name = "Spectrum.findByVoltage", query = "SELECT s FROM Spectrum s WHERE s.voltage = :voltage")})
+    @NamedQuery(name = "Spectrum.findAll", query = "SELECT s FROM Spectrum s"),
+    @NamedQuery(name = "Spectrum.findById", query = "SELECT s FROM Spectrum s WHERE s.id = :id"),
+    @NamedQuery(name = "Spectrum.findByVoltage", query = "SELECT s FROM Spectrum s WHERE s.voltage = :voltage"),
+    @NamedQuery(name = "Spectrum.findByFrequency", query = "SELECT s FROM Spectrum s WHERE s.frequency = :frequency")})
 public class Spectrum implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Temporal(TemporalType.TIME)
-    private Date time;
-    private BigInteger voltage;
+    private int voltage;
+    @Basic(optional = false)
+    @NotNull
+    private int frequency;
+    @JoinColumn(name = "experiment", referencedColumnName = "id")
+    @ManyToOne
+    private Experiment experiment;
 
     public Spectrum() {
     }
 
-    public Spectrum(Date time) {
-        this.time = time;
+    public Spectrum(Integer id) {
+        this.id = id;
     }
 
-    public Date getTime() {
-        return time;
+    public Spectrum(Integer id, int voltage, int frequency) {
+        this.id = id;
+        this.voltage = voltage;
+        this.frequency = frequency;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public Integer getId() {
+        return id;
     }
 
-    public BigInteger getVoltage() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(BigInteger voltage) {
+    public void setVoltage(int voltage) {
         this.voltage = voltage;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
+    public Experiment getExperiment() {
+        return experiment;
+    }
+
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (time != null ? time.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -74,7 +104,7 @@ public class Spectrum implements Serializable {
             return false;
         }
         Spectrum other = (Spectrum) object;
-        if ((this.time == null && other.time != null) || (this.time != null && !this.time.equals(other.time))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -82,7 +112,7 @@ public class Spectrum implements Serializable {
 
     @Override
     public String toString() {
-        return "generator.Spectrum[ time=" + time + " ]";
+        return "generator.Spectrum[ id=" + id + " ]";
     }
     
 }

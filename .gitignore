@@ -1,1 +1,4 @@
 /target/
+/simple-ejb/target/
+/simple-web/target/
+/simple-ear/target/
