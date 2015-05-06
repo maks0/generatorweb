@@ -5,7 +5,11 @@
  */
 package generator;
 
+import generator.util.ExcelExport;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -38,18 +42,25 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        int paginationStep = (int) toLong(request.getParameter("paginationstep"));
-        if (paginationStep < 5) {
-            paginationStep = 5;
-        } else if (paginationStep > 100) {
-            paginationStep = 100;
-        }
-        
-        int page = pageValidation(request.getParameter("page"), paginationStep);
+        String action = request.getParameter("action");
+        if ("excel".equals(action)) {
+            File exelFile = new ExcelExport().exportSpectrum(spectrumFacade.findAll());
+            sendFile(exelFile, response);
+        } else {
 
-        request.setAttribute("spectrum", new TypedContainer<Spectrum>(spectrumFacade.findPage(page, paginationStep)));
-        request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp?page=" + page
+            int paginationStep = (int) toLong(request.getParameter("paginationstep"));
+            if (paginationStep < 5) {
+                paginationStep = 5;
+            } else if (paginationStep > 100) {
+                paginationStep = 100;
+            }
+
+            int page = pageValidation(request.getParameter("page"), paginationStep);
+
+            request.setAttribute("spectrum", spectrumFacade.findPage(page, paginationStep));
+            request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp?page=" + page
                     + "&paginationstep=" + paginationStep).forward(request, response);
+        }
     }
 
     private int pageValidation(String pageString, int paginationStep) {
@@ -82,6 +93,21 @@ public class Controller extends HttpServlet {
             number = -1;
         }
         return number;
+    }
+
+    private void sendFile(File excelFile, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=spectrum.xls");
+        OutputStream out = response.getOutputStream();
+        FileInputStream in = new FileInputStream(excelFile);
+        byte[] buffer = new byte[4096];
+        int length;
+        while ((length = in.read(buffer)) > 0) {
+            out.write(buffer, 0, length);
+        }
+        in.close();
+        out.flush();
+        excelFile.delete();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

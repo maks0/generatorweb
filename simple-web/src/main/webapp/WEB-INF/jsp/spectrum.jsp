@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%-- 
     Document   : Spectrum
@@ -5,127 +6,135 @@
     Author     : maks
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <style type="text/css">
-    p { 
-        text-align: center;
+    body{
         font-family: Colibri;
-    }
-    h1 {
-        text-align: center;
-        font-family: Colibri;
+        font-size: 120%;
     }
     thead{
         font-style: italic;
         background-color: paleturquoise;
         /*        border: 1px blue solid;*/
     }
-    table{
-        margin: auto;     
-        font-family: Colibri;       
-/*        width: 75%;*/
-        text-align: center;
-    }
-    .spectrumtable{
-/*        background-color: lightblue;*/
-        width: 75%;
-
-    }
     .tableborder{
         border: 1px #d9edf7 solid;
-    }
-    .center{
-        text-align: center;
-    }
-
-    .navigationButtonsTable {
-        width: 20%;
-        /*        margin: auto;*/
-        text-align: center;
     }
     .smalltext{
         font-size: 75%
     }
-    .righttextalign { text-align: right; }
 
 </style>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Spectrum</title>
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <!--        <link href="assets/css/bootstrap.min.css" rel="stylesheet">-->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <!--        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Spectrum</h1>
 
-        <c:choose>
-            <c:when test="${sessionScope.user == null}"> 
-                <p>
-                    Hi, quest! Would you like to 
-                    <a href="controller?action=login&page=${param.page}&paginationstep=${param.paginationstep}">login</a> 
-                    <%--         or <a href="controller?action=register&page=${param.page}&paginationstep=${param.paginationstep}">register</a> --%>
-                </p> 
-            </c:when>
-            <c:otherwise>
-                <p>
-                    Hi, ${sessionScope.user.name} 
-                    (<a href="controller?action=logout&page=${param.page}&paginationstep=${param.paginationstep}">logout</a>)
-                </p>
-            </c:otherwise>
-        </c:choose>
-        <form action = "controller" >
-            <p> Show 
-                <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
-                    <option value="5" ${5 == param.paginationstep ? 'selected="selected"' : ''}> 5 </option>
-                    <option value="10" ${10 == param.paginationstep ? 'selected="selected"' : ''}> 10 </option>
-                    <option value="20" ${20 == param.paginationstep ? 'selected="selected"' : ''}> 20 </option>
-                    <option value="40" ${40 == param.paginationstep ? 'selected="selected"' : ''}> 40 </option>
-                    <option value="60" ${60 == param.paginationstep ? 'selected="selected"' : ''}> 60 </option>
-                </select>
-                records by a page
-            </p>
-            <input type="hidden" name="page" value="1"/>
-        </form>
+        <div class="row row-fix">
+            <div class="col-md-offset-1 col-md-10">
+                <!--                <div class="text-center">-->
+                <h1 class="text-center">Spectrum Panel</h1>
+                <!--                </div>-->
 
-<!--        <form action="controller" method="post">
-            <p>
-                <input type="file" name="inputedfile"/>
-                <input type="submit" value="send">
-            </p>
-        </form>-->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-md-1">
+                            <a href="controller?action=excel" class="btn btn-default">
+                                Export to excel file <i class="fa fa-download"></i>
+                            </a>
+                        </div>
+                        <!--                        <div class="col-md-offset-7 col-md-4">
+                                                    <form action="/admin/group" method="get">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="groupname" placeholder="Search by group name" value="${param.groupname}">
+                                                            <input type="hidden" name="action" value="search">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>-->
 
 
+                        <form action = "controller" class="col-md-offset-9 col-md-2" >
+                            <p> Show 
+                                <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
+                                    <option value="5" ${5 == param.paginationstep ? 'selected="selected"' : ''}> 5 </option>
+                                    <option value="10" ${10 == param.paginationstep ? 'selected="selected"' : ''}> 10 </option>
+                                    <option value="20" ${20 == param.paginationstep ? 'selected="selected"' : ''}> 20 </option>
+                                    <option value="40" ${40 == param.paginationstep ? 'selected="selected"' : ''}> 40 </option>
+                                    <option value="60" ${60 == param.paginationstep ? 'selected="selected"' : ''}> 60 </option>
+                                </select>
+                                records by a page
+                            </p>
+                            <input type="hidden" name="page" value="1"/>
+                        </form>
 
-        <table class="table-striped spectrumtable tableborder">
-            <thead>
-            <td>frequency, Hz</td>
-            <td>voltage, V</td>
-        </thead>
+                    </div>
+                </div>
 
-        <tbody>
-            <c:forEach var = "array" items = "${requestScope.spectrum.recordsList}">
-                <tr>
-                    <td>${array.frequency}</td>
-                    <td>${array.voltage}</td>
-                </tr>
-            </c:forEach> 
-        </tbody>
-    </table>
-    <table>
-        <td class="pagination">
-            <a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a>
-        </td>
-        <td class="navigationButtonsTable">
-            <a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a>
-        </td>
-        <td class="navigationButtonsTable"> ${param.page} </td>
-        <td class="navigationButtonsTable">
-            <a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a>
-        </td>
-        <td class="navigationButtonsTable">
-            <a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a>
-        </td>
-    </table>
-</body>
+                                    <%--
+                <c:choose>
+                    <c:when test="${sessionScope.user == null}"> 
+                        <p class="text-center">
+                            Hi, quest! Would you like to 
+                            <a href="controller?action=login&page=${param.page}&paginationstep=${param.paginationstep}">login</a> 
+                    or <a href="controller?action=register&page=${param.page}&paginationstep=${param.paginationstep}">register</a> 
+                        </p> 
+                    </c:when>
+                    <c:otherwise>
+                        <p class="text-center">
+                            Hi, ${sessionScope.user.name} 
+                            (<a href="controller?action=logout&page=${param.page}&paginationstep=${param.paginationstep}">logout</a>)
+                        </p>
+                    </c:otherwise>
+                </c:choose>
+--%>
+
+                <!--        <form action="controller" method="post">
+                            <p>
+                                <input type="file" name="inputedfile"/>
+                                <input type="submit" value="send">
+                            </p>
+                        </form>-->
+
+
+
+                <table class="table-striped tableborder col-md-offset-1 col-md-10 text-center">
+                    <thead>
+                    <td>frequency, Hz</td>
+                    <td>voltage, V</td>
+                    </thead>
+
+                    <tbody>
+                        <c:forEach var = "array" items = "${requestScope.spectrum}">
+                            <tr>
+                                <td>${array.frequency}</td>
+                                <td>${array.voltage}</td>
+                            </tr>
+                        </c:forEach> 
+                    </tbody>
+                </table>
+                <nav>
+                    <ul class="pager custom-pager col-md-12">
+                        <li><a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a></li>
+                        <li><a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a></li>
+                        <li><a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a></li>
+                        <li><a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <script src="assets/js/jquery-1.11.2.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+
+    </body>
 </html>
