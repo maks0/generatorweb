@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Spectrum.findAll", query = "SELECT s FROM Spectrum s ORDER BY s.frequency"),
     @NamedQuery(name = "Spectrum.findById", query = "SELECT s FROM Spectrum s WHERE s.id = :id"),
     @NamedQuery(name = "Spectrum.findByVoltage", query = "SELECT s FROM Spectrum s WHERE s.voltage = :voltage"),
-    @NamedQuery(name = "Spectrum.findByExperiment", query = "SELECT s FROM Spectrum s WHERE s.experiment = :experiment"),
+    @NamedQuery(name = "Spectrum.findByExperiment", query = "SELECT s FROM Spectrum s WHERE s.experiment = :experiment ORDER BY s.frequency"),
     @NamedQuery(name = "Spectrum.findByFrequency", query = "SELECT s FROM Spectrum s WHERE s.frequency = :frequency")})
 public class Spectrum implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -54,7 +54,6 @@ public class ExperimentBean implements ExperimentBeanLocal {
         while (experimentIterator.hasNext()){
             Experiment exp = experimentIterator.next();
             String model = exp.getDevice().getModel();
-            System.out.println("==========" + exp.getDevice().getModel());
             dtoList.add(new ExperimentDTO(exp.getId(), exp.getDatetime(), 
                     exp.getComment(), model));
         }
