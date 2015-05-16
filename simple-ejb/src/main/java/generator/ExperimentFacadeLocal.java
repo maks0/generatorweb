@@ -29,4 +29,6 @@ public interface ExperimentFacadeLocal {
 
     int count();
     
+    List<Experiment> findPage(int pageNumber, int paginationStep);
+    
 }

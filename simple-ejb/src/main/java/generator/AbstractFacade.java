@@ -51,6 +51,15 @@ public abstract class AbstractFacade<T> {
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
+    
+    public List<T> findPage(int pageNumber, int paginationStep) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        javax.persistence.Query query = getEntityManager().createQuery(cq);
+        query.setFirstResult((pageNumber - 1) * paginationStep);
+        query.setMaxResults(paginationStep);
+        return query.getResultList();
+    }
 
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();

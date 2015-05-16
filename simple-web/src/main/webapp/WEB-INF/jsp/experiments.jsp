@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- 
     Document   : Spectrum
     Created on : 15.04.2015, 17:04:24
@@ -8,10 +9,6 @@
 
 <!DOCTYPE html>
 <style type="text/css">
-    body{
-        font-family: Colibri;
-        font-size: 120%;
-    }
     thead{
         font-style: italic;
         background-color: paleturquoise;
@@ -26,10 +23,21 @@
     html {
         height: 100%;
         width: 97%
+            /*        margin-bottom: 10px;*/
     }
     body {
         font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
         height: 100%;
+        margin-bottom: 30px;
+    }
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 30px;
+        width: 99%;
+        background-color: #d9edf7;
     }
 
 </style>
@@ -48,21 +56,15 @@
     <body>
 
         <div class="row row-fix">
-            <div class="col-md-offset-1 col-md-10">
+            <div class="col-md-offset-1 col-md-10 ">
                 <!--                <div class="text-center">-->
-                <h1 class="text-center">Spectrum Panel</h1>
+                <h1 class="text-center">Experiments Panel</h1>
                 <!--                </div>-->
 
                 <div class="panel panel-default">
                     <div class="panel-body">
-
                         <div class="col-md-1">
-                            <a href="exp" class="btn btn-default">
-                                <i class="fa fa-angle-left fa-lg"></i> Back
-                            </a>
-                        </div>
-                        <div class="col-md-1">
-                            <a href="exp?action=excel" class="btn btn-default">
+                            <a href="exp?action=" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>
                         </div>
@@ -79,7 +81,7 @@
                                                 </div>-->
 
 
-                        <form action = "controller" class="col-md-offset-8 col-md-2" >
+                        <form action = "exp" class="col-md-offset-8 col-md-2" >
                             <p> Show 
                                 <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
                                     <option value="5" ${5 == param.paginationstep ? 'selected="selected"' : ''}> 5 </option>
@@ -114,60 +116,54 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
 </c:choose>
                 --%>
 
+                <!--        <form action="controller" method="post">
+                            <p>
+                                <input type="file" name="inputedfile"/>
+                                <input type="submit" value="send">
+                            </p>
+                        </form>-->
 
 
 
-                <c:choose>
-                    <c:when test="${not empty requestScope.spectrum}">
-                        <table class="table-striped tableborder col-md-offset-1 col-md-10 text-center">
-                            <thead>
-                            <td>frequency, Hz</td>
-                            <td>voltage, V</td>
-                            </thead>
+                <table class="table-striped tableborder col-md-offset-1 col-md-10 text-center">
+                    <thead>
+                    <td class="col-md-2">Start date and time</td>
+                    <td class="col-md-2">Measurement Device</td>
+                    <td class="col-md-5">Comment</td>
+                    <td class="col-md-1"></td>
+                    </thead>
 
-                            <tbody>
-                                <c:forEach var = "array" items = "${requestScope.spectrum}">
-                                    <tr>
-                                        <td>${array.frequency}</td>
-                                        <td>${array.voltage}</td>
-                                    </tr>
-                                </c:forEach> 
-                            </tbody>
-                        </table>
+                    <tbody>
+                        <c:forEach var = "array" items = "${requestScope.experiments}">
+                            <tr>
+                                <td>                                
+                                    <fmt:formatDate type="both" 
+                                                    dateStyle="short" timeStyle="short" 
+                                                    value="${array.beginTime}" />
+                                </td>
 
+                                <td>${array.measurementDeviceModel}</td>
+                                <td>${array.comment}</td>
+                                <td> 
+                                    <a href="exp?action=results&exp-id=${array.id}" class="btn btn-default">View results</a>
+                                </td>
+                            </tr>
+                        </c:forEach> 
+                    </tbody>
+                </table>
 
-                    </c:when>
-                    <c:otherwise>
-                        <h1 class="text-center">No Results Found</h1>
-                    </c:otherwise>
-                </c:choose>
-
-
-
-
-
-
-                <div class=" col-md-12">
+                <div class="col-md-offset-1 col-md-10">
                     <%@ include file="../partials/pagination.jspf" %>
                 </div>
-                <%--               <nav>
-                   <ul class="pager custom-pager col-md-12">
-                       <li><a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a></li>
-                       <li><a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a></li>
-                       <li><a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a></li>
-                       <li><a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a></li>
-                   </ul>
-               </nav>
-                --%>
 
 
-                <%--
-                <footer>
-                     <%@ include file="../partials/footer.jspf" %>
-                </footer>
-                --%>
+
             </div>
         </div>
+        <%--        <footer class="footer">
+                    <%@ include file="../partials/footer.jspf" %>
+        </footer>--%>
+
         <script src="assets/js/jquery-1.11.2.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
 

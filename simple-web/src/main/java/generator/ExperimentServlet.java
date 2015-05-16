@@ -5,12 +5,17 @@
  */
 package generator;
 
+import generator.ejb.ExperimentBeanLocal;
 import generator.util.ExcelExport;
+import generator.utils.PagerLink;
+import generator.utils.RequestAttribute;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +27,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author maks
  */
-@WebServlet(name = "Controller", urlPatterns = {"/controller"})
-public class Controller extends HttpServlet {
+@WebServlet(name = "ExperimentServlet", urlPatterns = {"/exp", "/index.html"})
+public class ExperimentServlet extends HttpServlet {
 
     @EJB
+    private ExperimentFacadeLocal experimentFacade;
+    
+    @EJB
     private SpectrumFacadeLocal spectrumFacade;
+    
+    @EJB
+    private ExperimentBeanLocal experimentBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,9 +55,17 @@ public class Controller extends HttpServlet {
 
         String action = request.getParameter("action");
         if ("excel".equals(action)) {
-            File exelFile = new ExcelExport().exportSpectrum(spectrumFacade.findAll());
-            sendFile(exelFile, response);
+//            File exelFile = new ExcelExport().exportSpectrum(spectrumFacade.findAll());
+//            sendFile(exelFile, response);
+        } else if ("results".equals(action)) {
+            viewResults(request, response);
         } else {
+            viewExperiments(request, response);
+        }
+    }
+    
+    private void viewExperiments (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
             int paginationStep = (int) toLong(request.getParameter("paginationstep"));
             if (paginationStep < 5) {
@@ -55,26 +74,78 @@ public class Controller extends HttpServlet {
                 paginationStep = 100;
             }
 
-            int page = pageValidation(request.getParameter("page"), paginationStep);
+            
+            int page = toInt(request.getParameter("page"));
+            if (page < 1) {
+                page = 1;
+            }
+            
+            PagerLink pagerLink = new PagerLink();
+            pagerLink.addParameter("paginationstep", "" + paginationStep);
+            request.setAttribute(RequestAttribute.PAGER.getName(),
+                    experimentBean.getPager(page, paginationStep));
+            request.setAttribute(RequestAttribute.PAGER_LINK.getName(), pagerLink);
+            
+          
+//            request.setAttribute("experiments", experimentFacade.findPage(page, paginationStep));
+                        
+            request.setAttribute("experiments", experimentBean.getExperimentPage(page, paginationStep));
+                        
+            request.getRequestDispatcher("/WEB-INF/jsp/experiments.jsp?paginationstep=" + paginationStep).forward(request, response);
+//            request.getRequestDispatcher("/WEB-INF/jsp/experiments.jsp?page=" + page
+//                    + "&paginationstep=" + paginationStep).forward(request, response);
+        
+    }
+    
+        
+    private void viewResults (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-            request.setAttribute("spectrum", spectrumFacade.findPage(page, paginationStep));
+            int paginationStep = (int) toLong(request.getParameter("paginationstep"));
+            if (paginationStep < 5) {
+                paginationStep = 5;
+            } else if (paginationStep > 100) {
+                paginationStep = 100;
+            }
+            int page = toInt(request.getParameter("page"));
+            if (page < 1) {
+                page = 1;
+            }
+            int experimentId = toInt(request.getParameter("exp-id"));
+            
+            //if (experimentId < 1)
+            
+            PagerLink pagerLink = new PagerLink();
+            pagerLink.addParameter("paginationstep", "" + paginationStep);
+            pagerLink.addParameter("action", "results");
+            pagerLink.addParameter("exp-id", "" + experimentId);
+            request.setAttribute(RequestAttribute.PAGER.getName(),
+                    experimentBean.getResultsPager(experimentId, page, paginationStep));
+            request.setAttribute(RequestAttribute.PAGER_LINK.getName(), pagerLink);
+            
+            Collection <Spectrum> spectrum = experimentBean.getResults(experimentId, page, paginationStep);
+            request.setAttribute("spectrum", spectrum);
             request.getRequestDispatcher("/WEB-INF/jsp/spectrum.jsp?page=" + page
                     + "&paginationstep=" + paginationStep).forward(request, response);
-        }
+        
     }
 
-    private int pageValidation(String pageString, int paginationStep) {
+
+
+    
+        @Deprecated
+    private int pageValidation(String pageString, int paginationStep, int amount) {
         int page = (int) toLong(pageString);
 
         if ("last".equals(pageString)) {
 
-            page = (int) ((spectrumFacade.count() - 1) / paginationStep) + 1;
+            page = (int) ((amount - 1) / paginationStep) + 1;
 
         } else if (page < 1) {
             page = 1;
         } else {
 
-            int lastPage = (int) ((spectrumFacade.count() - 1) / paginationStep) + 1;
+            int lastPage = (int) ((amount - 1) / paginationStep) + 1;
             if (page > lastPage) {
                 page = lastPage;
             }
@@ -82,7 +153,7 @@ public class Controller extends HttpServlet {
         }
         return page;
     }
-
+        
     private long toLong(String intString) {
         long number;
         try {
@@ -94,6 +165,23 @@ public class Controller extends HttpServlet {
         }
         return number;
     }
+    
+        
+    private int toInt(String intString) {
+        int number;
+        try {
+            number = Integer.parseInt(intString);
+        } catch (NumberFormatException e) {
+            number = -1;
+        } catch (NullPointerException e) {
+            number = -1;
+        }
+        return number;
+    }
+    
+    
+        
+
 
     private void sendFile(File excelFile, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/vnd.ms-excel");

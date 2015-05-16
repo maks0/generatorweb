@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -29,12 +30,18 @@ public class SpectrumFacade extends AbstractFacade<Spectrum> implements Spectrum
         super(Spectrum.class);
     }
     
-    public List<Spectrum> findPage(int pageNumber, int paginationStep) {
-        TypedQuery<Spectrum> query = em.createNamedQuery("Spectrum.findAll", Spectrum.class);
+    public List<Spectrum> findPage(Experiment experiment, int pageNumber, int paginationStep) {
+        TypedQuery<Spectrum> query = em.createNamedQuery("Spectrum.findByExperiment", Spectrum.class);
+        query.setParameter("experiment", experiment);
         query.setFirstResult((pageNumber - 1) * paginationStep);
         query.setMaxResults(paginationStep);
         List<Spectrum> answers = query.getResultList();
         return answers;
     }
     
+    public int count (Experiment experiment){
+        Query query = em.createQuery("SELECT count(s) FROM Spectrum s WHERE (s.experiment = :experiment)");
+        query.setParameter("experiment", experiment);
+        return ((Long) query.getSingleResult()).intValue();
+    }
 }

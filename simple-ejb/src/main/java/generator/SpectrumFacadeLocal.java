@@ -31,4 +31,8 @@ public interface SpectrumFacadeLocal {
     
     List<Spectrum> findPage(int pageNumber, int paginationStep);
     
+    List<Spectrum> findPage(Experiment experiment, int pageNumber, int paginationStep);
+    
+    int count (Experiment experiment);
+    
 }

@@ -1,0 +1,11 @@
+<%--
+  User: Kyrylo Berehovyi
+  Date: 19/04/2015
+  Time: 19:59
+--%>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">&copy; 2015 author email: maksbrunarskiy@gmail.com, ver. 0.2</p>
+    </div>
+</footer>
