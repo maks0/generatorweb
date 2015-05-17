@@ -22,13 +22,16 @@
     }
     html {
         height: 100%;
-        width: 97%
-            /*        margin-bottom: 10px;*/
+        width: 97%;
     }
     body {
         font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
         height: 100%;
         margin-bottom: 30px;
+        
+    }
+    tr{
+        font-size: 120%;
     }
     .footer {
         position: absolute;
@@ -125,7 +128,7 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
 
 
 
-                <table class="table-striped tableborder col-md-offset-1 col-md-10 text-center">
+                <table class="table table-striped tableborder col-md-10 text-center">
                     <thead>
                     <td class="col-md-2">Start date and time</td>
                     <td class="col-md-2">Measurement Device</td>

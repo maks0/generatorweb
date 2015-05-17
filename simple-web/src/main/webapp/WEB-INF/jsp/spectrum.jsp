@@ -10,7 +10,6 @@
 <style type="text/css">
     body{
         font-family: Colibri;
-        font-size: 120%;
     }
     thead{
         font-style: italic;
@@ -22,6 +21,10 @@
     }
     .smalltext{
         font-size: 75%
+    }
+        
+    tr{
+        font-size: 110%;
     }
     html {
         height: 100%;
@@ -119,7 +122,7 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
 
                 <c:choose>
                     <c:when test="${not empty requestScope.spectrum}">
-                        <table class="table-striped tableborder col-md-offset-1 col-md-10 text-center">
+                        <table class="table table-striped tableborder col-md-10 text-center">
                             <thead>
                             <td>frequency, Hz</td>
                             <td>voltage, V</td>
