@@ -35,4 +35,6 @@ public interface SpectrumFacadeLocal {
     
     int count (Experiment experiment);
     
+    List<Spectrum> findByExperiment(Experiment experiment);
+    
 }

@@ -19,9 +19,6 @@
     .tableborder{
         border: 1px #d9edf7 solid;
     }
-    .smalltext{
-        font-size: 75%
-    }
         
     tr{
         font-size: 110%;
@@ -65,7 +62,7 @@
                             </a>
                         </div>
                         <div class="col-md-1">
-                            <a href="exp?action=excel" class="btn btn-default">
+                            <a href="exp?action=results-to-excel&expid=${param.expid}" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>
                         </div>

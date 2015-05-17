@@ -25,4 +25,6 @@ public interface ExperimentBeanLocal {
     Pager getPager (int page, int pStep);
     
     Collection<ExperimentDTO> getExperimentPage(int page, int pStep);
+    
+    Collection<Spectrum> getResults(int experimentId);
 }

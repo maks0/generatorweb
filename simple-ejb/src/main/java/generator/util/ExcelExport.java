@@ -10,9 +10,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,26 +26,37 @@ import java.util.Locale;
 public class ExcelExport {
     
         
-    public File exportSpectrum ( List<Spectrum> rows) throws IOException {
+    public File exportSpectrum (Collection<Spectrum> rows) throws IOException {
         return exportSpectrum("Spectrum", rows);
     }
 
-    public File exportSpectrum (String header, List<Spectrum> rows) throws IOException {
+    public File exportSpectrum (String header, Collection<Spectrum> rows) throws IOException {
         String time = ((Long) Calendar.getInstance().getTimeInMillis()).toString();
         String filePath = "mytemp" + File.separator + "Spectrum" + time + ".xls";
-        return writeSpectrum(header, filePath, rows);
+        return writeSpectrum(header, createNewFile(), rows);
+    }
+    
+        
+    private File createNewFile () {
+        String directory = "mytemp";
+        if (!(Files.isDirectory(Paths.get(directory)))) {
+            new File(directory).mkdirs();
+        }
+
+        String time = ((Long) Calendar.getInstance().getTimeInMillis()).toString();
+        String filePath = directory + File.separator + "Report" + time + ".xls"; 
+        return new File(filePath);
     }
 
-    public File writeSpectrum(String header, String path, List<Spectrum> report) throws IOException {
+    public File writeSpectrum(String header, File f, Collection<Spectrum> report) throws IOException {
 
         HSSFWorkbook workbook = null;
         HSSFSheet sheet = null;
-        File f = new File(path);
 
-        if (f.exists()) {
-            f.delete();
-            f.createNewFile();
-        }
+//        if (f.exists()) {
+//            f.delete();
+//            f.createNewFile();
+//        }
 
         workbook = new HSSFWorkbook();
         sheet = workbook.createSheet("Spectrum");
@@ -64,7 +79,7 @@ public class ExcelExport {
         }
     }
 
-    private void writeSpectrumTable(String header, Sheet sheet, List<Spectrum> reportsRows) {
+    private void writeSpectrumTable(String header, Sheet sheet, Collection<Spectrum> spectrum) {
         Row firstRow = sheet.createRow(0);
         firstRow.createCell(0).setCellValue(header);
         firstRow.createCell(4).setCellValue("File was created by System : ");
@@ -73,7 +88,8 @@ public class ExcelExport {
         tableHeader.createCell(0).setCellValue("Frequency");
         tableHeader.createCell(1).setCellValue("Voltage");
         int rowNum = 2;
-        for (Spectrum dataRow : reportsRows) {
+        for (Iterator<Spectrum> it = spectrum.iterator(); it.hasNext();) {
+            Spectrum dataRow = it.next();
             Row row = sheet.createRow(rowNum);
             row.createCell(0).setCellValue(dataRow.getFrequency());
             row.createCell(1).setCellValue(dataRow.getVoltage());

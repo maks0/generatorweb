@@ -148,7 +148,7 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                                 <td>${array.measurementDeviceModel}</td>
                                 <td>${array.comment}</td>
                                 <td> 
-                                    <a href="exp?action=results&exp-id=${array.id}" class="btn btn-default">View results</a>
+                                    <a href="exp?action=results&expid=${array.id}" class="btn btn-default">View results</a>
                                 </td>
                             </tr>
                         </c:forEach> 

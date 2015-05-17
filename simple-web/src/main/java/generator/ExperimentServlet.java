@@ -30,11 +30,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ExperimentServlet", urlPatterns = {"/exp", "/index.html"})
 public class ExperimentServlet extends HttpServlet {
 
-    @EJB
-    private ExperimentFacadeLocal experimentFacade;
-    
-    @EJB
-    private SpectrumFacadeLocal spectrumFacade;
+//    @EJB
+//    private ExperimentFacadeLocal experimentFacade;
+//    
+//    @EJB
+//    private SpectrumFacadeLocal spectrumFacade;
     
     @EJB
     private ExperimentBeanLocal experimentBean;
@@ -54,9 +54,11 @@ public class ExperimentServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String action = request.getParameter("action");
-        if ("excel".equals(action)) {
-//            File exelFile = new ExcelExport().exportSpectrum(spectrumFacade.findAll());
-//            sendFile(exelFile, response);
+        if ("results-to-excel".equals(action)) {
+            int experimentId = toInt(request.getParameter("expid"));
+            System.out.println("=================" + experimentId);
+            File exelFile = new ExcelExport().exportSpectrum(experimentBean.getResults(experimentId));
+            sendFile(exelFile, response);
         } else if ("results".equals(action)) {
             viewResults(request, response);
         } else {
@@ -111,14 +113,14 @@ public class ExperimentServlet extends HttpServlet {
             if (page < 1) {
                 page = 1;
             }
-            int experimentId = toInt(request.getParameter("exp-id"));
+            int experimentId = toInt(request.getParameter("expid"));
             
             //if (experimentId < 1)
             
             PagerLink pagerLink = new PagerLink();
             pagerLink.addParameter("paginationstep", "" + paginationStep);
             pagerLink.addParameter("action", "results");
-            pagerLink.addParameter("exp-id", "" + experimentId);
+            pagerLink.addParameter("expid", "" + experimentId);
             request.setAttribute(RequestAttribute.PAGER.getName(),
                     experimentBean.getResultsPager(experimentId, page, paginationStep));
             request.setAttribute(RequestAttribute.PAGER_LINK.getName(), pagerLink);

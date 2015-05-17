@@ -35,6 +35,13 @@ public class ExperimentBean implements ExperimentBeanLocal {
     }
     
         
+    public Collection<Spectrum> getResults(int experimentId) {
+        Experiment experiment = experimentFacade.find(experimentId);
+        Collection<Spectrum> spectrum = spectrumFacadeLocal.findByExperiment(experiment);
+        return new ArrayList <Spectrum> (spectrum);
+    }
+    
+        
     public Collection<ExperimentDTO> getExperimentPage(int page, int pStep) {
         Collection<Experiment> experiments = experimentFacade.findPage(page, pStep);
         return toExperimentDTO(experiments);

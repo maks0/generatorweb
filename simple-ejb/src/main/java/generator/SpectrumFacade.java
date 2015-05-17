@@ -39,6 +39,14 @@ public class SpectrumFacade extends AbstractFacade<Spectrum> implements Spectrum
         return answers;
     }
     
+        
+    public List<Spectrum> findByExperiment(Experiment experiment) {
+        TypedQuery<Spectrum> query = em.createNamedQuery("Spectrum.findByExperiment", Spectrum.class);
+        query.setParameter("experiment", experiment);
+        List<Spectrum> answers = query.getResultList();
+        return answers;
+    }
+    
     public int count (Experiment experiment){
         Query query = em.createQuery("SELECT count(s) FROM Spectrum s WHERE (s.experiment = :experiment)");
         query.setParameter("experiment", experiment);
