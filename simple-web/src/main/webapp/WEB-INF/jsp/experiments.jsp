@@ -145,7 +145,9 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                         Comment
                         <div class="smalltext">Коментар</div>
                     </th>
-                    <th class="col-md-1"></th>
+                    <th class="col-md-1 text-center smalltext">
+                        Показати результат
+                    </th>
                     </thead>
 
                     <tbody>
