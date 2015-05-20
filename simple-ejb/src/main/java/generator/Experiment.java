@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package generator;
 
 import java.io.Serializable;
@@ -32,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Experiment.findAll", query = "SELECT e FROM Experiment e ORDER BY e.datetime"),
+    @NamedQuery(name = "Experiment.findAll", query = "SELECT e FROM Experiment e ORDER BY e.datetime DESC"),
     @NamedQuery(name = "Experiment.findByDatetime", query = "SELECT e FROM Experiment e WHERE e.datetime = :datetime"),
     @NamedQuery(name = "Experiment.findByComment", query = "SELECT e FROM Experiment e WHERE e.comment = :comment"),
     @NamedQuery(name = "Experiment.findById", query = "SELECT e FROM Experiment e WHERE e.id = :id")})

@@ -49,7 +49,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Spectrum</title>
+        <title>Spectrums</title>
         <!--        <link href="assets/css/bootstrap.min.css" rel="stylesheet">-->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <!--        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
@@ -61,13 +61,16 @@
         <div class="row row-fix">
             <div class="col-md-offset-1 col-md-10 ">
                 <!--                <div class="text-center">-->
-                <h1 class="text-center">Experiments Panel</h1>
+                <h1 class="text-center">
+                    Experiments
+                </h1>
+                <h3 class="text-center">Експерименти</h3>
                 <!--                </div>-->
 
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-1">
-                            <a href="exp?action=" class="btn btn-default">
+                            <a href="exp?action=exp-to-xls" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>
                         </div>
@@ -130,10 +133,19 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
 
                 <table class="table table-striped tableborder col-md-10 text-center">
                     <thead>
-                    <td class="col-md-2">Start date and time</td>
-                    <td class="col-md-2">Measurement Device</td>
-                    <td class="col-md-5">Comment</td>
-                    <td class="col-md-1"></td>
+                    <th class="col-md-2 text-center">
+                        Start date and time
+                        <div class="smalltext">Початок експеременту</div>
+                    </th>
+                    <th class="col-md-2 text-center">
+                        Measurement Device
+                        <div class="smalltext">Вимірювальний пристрій</div>
+                    </th>
+                    <th class="col-md-5 text-center">
+                        Comment
+                        <div class="smalltext">Коментар</div>
+                    </th>
+                    <th class="col-md-1"></th>
                     </thead>
 
                     <tbody>

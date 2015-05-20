@@ -56,9 +56,11 @@ public class ExperimentServlet extends HttpServlet {
         String action = request.getParameter("action");
         if ("results-to-excel".equals(action)) {
             int experimentId = toInt(request.getParameter("expid"));
-            System.out.println("=================" + experimentId);
             File exelFile = new ExcelExport().exportSpectrum(experimentBean.getResults(experimentId));
-            sendFile(exelFile, response);
+            sendFile("spectrum.xls", exelFile, response);
+        } else if ("exp-to-xls".equals(action)){
+            File exelFile = new ExcelExport().exportExperiments(experimentBean.getAllExperiments());
+            sendFile("experiments.xls",exelFile, response);
         } else if ("results".equals(action)) {
             viewResults(request, response);
         } else {
@@ -185,9 +187,9 @@ public class ExperimentServlet extends HttpServlet {
         
 
 
-    private void sendFile(File excelFile, HttpServletResponse response) throws ServletException, IOException {
+    private void sendFile(String fileName, File excelFile, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=spectrum.xls");
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
         OutputStream out = response.getOutputStream();
         FileInputStream in = new FileInputStream(excelFile);
         byte[] buffer = new byte[4096];

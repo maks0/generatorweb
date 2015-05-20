@@ -28,6 +28,7 @@ public class ExperimentBean implements ExperimentBeanLocal {
     @EJB
     SpectrumFacadeLocal spectrumFacadeLocal;
 
+    @Override
     public Collection<Spectrum> getResults(int experimentId, int page, int pStep) {
         Experiment experiment = experimentFacade.find(experimentId);
         Collection<Spectrum> spectrum = spectrumFacadeLocal.findPage(experiment, page, pStep);
@@ -35,6 +36,7 @@ public class ExperimentBean implements ExperimentBeanLocal {
     }
     
         
+    @Override
     public Collection<Spectrum> getResults(int experimentId) {
         Experiment experiment = experimentFacade.find(experimentId);
         Collection<Spectrum> spectrum = spectrumFacadeLocal.findByExperiment(experiment);
@@ -42,15 +44,24 @@ public class ExperimentBean implements ExperimentBeanLocal {
     }
     
         
+    @Override
     public Collection<ExperimentDTO> getExperimentPage(int page, int pStep) {
         Collection<Experiment> experiments = experimentFacade.findPage(page, pStep);
         return toExperimentDTO(experiments);
     }
+        
+    @Override
+    public Collection<ExperimentDTO> getAllExperiments() {
+        Collection<Experiment> experiments = experimentFacade.findAll();
+        return toExperimentDTO(experiments);
+    }
+    @Override
     public Pager getResultsPager (int experimentId, int page, int pStep){
         Experiment experiment = experimentFacade.find(experimentId);
         return PageCalculator.getInstance().calculatePages(page, pStep, spectrumFacadeLocal.count(experiment));
     }
         
+    @Override
     public Pager getPager (int page, int pStep){
         return PageCalculator.getInstance().calculatePages(page, pStep, experimentFacade.count());
     }

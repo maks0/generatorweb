@@ -8,9 +8,6 @@
 
 <!DOCTYPE html>
 <style type="text/css">
-    body{
-        font-family: Colibri;
-    }
     thead{
         font-style: italic;
         background-color: paleturquoise;
@@ -19,17 +16,21 @@
     .tableborder{
         border: 1px #d9edf7 solid;
     }
-        
-    tr{
-        font-size: 110%;
+    .smalltext{
+        font-size: 75%
     }
     html {
         height: 100%;
-        width: 97%
+        width: 97%;
     }
     body {
         font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
         height: 100%;
+        margin-bottom: 30px;
+        
+    }
+    tr{
+        font-size: 120%;
     }
 
 </style>
@@ -38,7 +39,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Spectrum</title>
+        <title>Spectrums</title>
         <!--        <link href="assets/css/bootstrap.min.css" rel="stylesheet">-->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <!--        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
@@ -50,7 +51,8 @@
         <div class="row row-fix">
             <div class="col-md-offset-1 col-md-10">
                 <!--                <div class="text-center">-->
-                <h1 class="text-center">Spectrum Panel</h1>
+                <h1 class="text-center">Spectrum</h1>
+                <h3 class="text-center">Спектр</h3>
                 <!--                </div>-->
 
                 <div class="panel panel-default">
@@ -121,8 +123,14 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                     <c:when test="${not empty requestScope.spectrum}">
                         <table class="table table-striped tableborder col-md-10 text-center">
                             <thead>
-                            <td>frequency, Hz</td>
-                            <td>voltage, V</td>
+                            <th class="text-center">
+                                Frequency, Hz
+                                <div class="smalltext">Частота, Гц</div>
+                            </th>
+                            <th class="text-center">
+                                Voltage, V
+                                <div class="smalltext">Напруга, В</div>
+                            </th>
                             </thead>
 
                             <tbody>

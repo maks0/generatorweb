@@ -1,6 +1,7 @@
 package generator.util;
 
 import generator.Spectrum;
+import generator.dto.ExperimentDTO;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -31,9 +32,15 @@ public class ExcelExport {
     }
 
     public File exportSpectrum (String header, Collection<Spectrum> rows) throws IOException {
-        String time = ((Long) Calendar.getInstance().getTimeInMillis()).toString();
-        String filePath = "mytemp" + File.separator + "Spectrum" + time + ".xls";
         return writeSpectrum(header, createNewFile(), rows);
+    }
+        
+//    public File exportSpectrum (String header, Collection<Spectrum> rows) throws IOException {
+//        return writeSpectrum(header, createNewFile(), rows);
+//    }
+        
+    public File exportExperiments (Collection<ExperimentDTO> rows) throws IOException {
+        return writeExperiments(createNewFile(), rows);
     }
     
         
@@ -48,25 +55,48 @@ public class ExcelExport {
         return new File(filePath);
     }
 
-    public File writeSpectrum(String header, File f, Collection<Spectrum> report) throws IOException {
+    public File writeSpectrum(String header, File f, Collection <Spectrum> report) throws IOException {
 
         HSSFWorkbook workbook = null;
         HSSFSheet sheet = null;
 
-//        if (f.exists()) {
-//            f.delete();
-//            f.createNewFile();
-//        }
+        if (f.exists()) {
+            f.delete();
+            f.createNewFile();
+        }
 
         workbook = new HSSFWorkbook();
         sheet = workbook.createSheet("Spectrum");
         writeSpectrumTable(header, sheet, report);
 
+        return writeExcelFile(f, workbook);
+    }
+        
+    public File writeExperiments(File f, Collection<ExperimentDTO> report) throws IOException {
+
+        HSSFWorkbook workbook = null;
+        HSSFSheet sheet = null;
+
+        if (f.exists()) {
+            f.delete();
+            f.createNewFile();
+        }
+
+        workbook = new HSSFWorkbook();
+        sheet = workbook.createSheet("Experiments");
+        writeExperimentsTable(sheet, report);
+
+        return writeExcelFile(f, workbook);
+    }
+    
+    
+    private File writeExcelFile (File file, HSSFWorkbook workbook) throws IOException{
+                
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream(f);
+            out = new FileOutputStream(file);
             workbook.write(out);
-            return f;
+            return file;
         } finally {
             if (out != null) {
                 try {
@@ -84,10 +114,18 @@ public class ExcelExport {
         firstRow.createCell(0).setCellValue(header);
         firstRow.createCell(4).setCellValue("File was created by System : ");
         firstRow.createCell(8).setCellValue(dateToString(Calendar.getInstance().getTime()));
-        Row tableHeader = sheet.createRow(1);
-        tableHeader.createCell(0).setCellValue("Frequency");
-        tableHeader.createCell(1).setCellValue("Voltage");
-        int rowNum = 2;
+        
+        Row secRow = sheet.createRow(1);
+        secRow.createCell(0).setCellValue("Спектр");
+        
+        Row tableHeader = sheet.createRow(2);
+        tableHeader.createCell(0).setCellValue("Frequency, Hz");
+        tableHeader.createCell(1).setCellValue("Voltage, V");
+                
+        Row tableHeaderUkr = sheet.createRow(3);
+        tableHeaderUkr.createCell(0).setCellValue("Частота, Гц");
+        tableHeaderUkr.createCell(1).setCellValue("Напруга, В");
+        int rowNum = 4;
         for (Iterator<Spectrum> it = spectrum.iterator(); it.hasNext();) {
             Spectrum dataRow = it.next();
             Row row = sheet.createRow(rowNum);
@@ -96,76 +134,33 @@ public class ExcelExport {
             rowNum++;
         }
     }
-
-    public File exportReportRows(int allOrders, List<ReportsRow> rows) throws IOException {
-        return exportReportRows("TSS report", allOrders, rows);
-    }
-
-    public File exportReportRows(String header, int allOrders, List<ReportsRow> rows) throws IOException {
-        String time = ((Long) Calendar.getInstance().getTimeInMillis()).toString();
-        String filePath = "mytemp" + File.separator + "Report" + time + ".xls";
-        return writeReport(header, allOrders, filePath, rows);
-    }
-
-    
-    
-    
-    
-    public File writeReport(String header, int allOrders, String path, List<ReportsRow> report) throws IOException {
-
-        HSSFWorkbook workbook = null;
-        HSSFSheet sheet = null;
-        File f = new File(path);
-
-        if (f.exists()) {
-            f.delete();
-            f.createNewFile();
-        }
-
-        workbook = new HSSFWorkbook();
-        sheet = workbook.createSheet("Report");
-        writeReportsRows(header, allOrders, sheet, report);
-
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(f);
-            workbook.write(out);
-            return f;
-        } finally {
-            if (out != null) {
-                try {
-                out.close();
-                } catch (IOException e){
-                    //TODO 
-                    
-                }
-            }
-        }
-    }
-
-//    private void writeToFile (File file){
-//        
-//    }
-    private void writeReportsRows(String header, int allOrders, Sheet sheet, List<ReportsRow> reportsRows) {
+        
+    private void writeExperimentsTable(Sheet sheet, Collection<ExperimentDTO> experiments) {
         Row firstRow = sheet.createRow(0);
-        firstRow.createCell(0).setCellValue(header);
-        firstRow.createCell(4).setCellValue("Report was created by System : ");
+        firstRow.createCell(0).setCellValue("Experiments Report");
+        firstRow.createCell(4).setCellValue("File was created by System : ");
         firstRow.createCell(8).setCellValue(dateToString(Calendar.getInstance().getTime()));
-        Row tableHeader = sheet.createRow(1);
-        tableHeader.createCell(0).setCellValue("Parameter");
-        tableHeader.createCell(1).setCellValue("+");
-        tableHeader.createCell(2).setCellValue("-");
-        int rowNum = 2;
-        for (ReportsRow dataRow : reportsRows) {
+        
+        Row secRow = sheet.createRow(1);
+        secRow.createCell(0).setCellValue("Експерименти");
+        
+        Row tableHeader = sheet.createRow(2);
+        tableHeader.createCell(0).setCellValue("Start date and time");
+        tableHeader.createCell(1).setCellValue("Measurement Device");
+        tableHeader.createCell(2).setCellValue("Comment");
+        Row tableHeaderUkr = sheet.createRow(3);
+        tableHeaderUkr.createCell(0).setCellValue("Початок експеременту");
+        tableHeaderUkr.createCell(1).setCellValue("Вимірювальний пристрій");
+        tableHeaderUkr.createCell(2).setCellValue("Коментар");
+        int rowNum = 4;
+        for (Iterator<ExperimentDTO> it = experiments.iterator(); it.hasNext();) {
+            ExperimentDTO dataRow = it.next();
             Row row = sheet.createRow(rowNum);
-            row.createCell(0).setCellValue(dataRow.getName());
-            row.createCell(1).setCellValue(dataRow.getValue());
-            row.createCell(2).setCellValue(allOrders - dataRow.getValue());
+            row.createCell(0).setCellValue(dateToString(dataRow.getBeginTime()));
+            row.createCell(1).setCellValue(dataRow.getMeasurementDeviceModel());
+            row.createCell(2).setCellValue(dataRow.getComment());
             rowNum++;
         }
-        Row footer = sheet.createRow(rowNum + 2);
-        footer.createCell(0).setCellValue("All analyzed taxi orders : ");
-        footer.createCell(4).setCellValue(allOrders);
     }
 
     public String dateToString(Date date) { //maybe private?

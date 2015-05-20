@@ -27,4 +27,6 @@ public interface ExperimentBeanLocal {
     Collection<ExperimentDTO> getExperimentPage(int page, int pStep);
     
     Collection<Spectrum> getResults(int experimentId);
+    
+    Collection<ExperimentDTO> getAllExperiments();
 }
