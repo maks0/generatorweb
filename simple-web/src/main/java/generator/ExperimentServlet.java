@@ -61,6 +61,10 @@ public class ExperimentServlet extends HttpServlet {
         } else if ("exp-to-xls".equals(action)){
             File exelFile = new ExcelExport().exportExperiments(experimentBean.getAllExperiments());
             sendFile("experiments.xls",exelFile, response);
+        } else if ("add-exp".equals(action)){
+            request.getRequestDispatcher("/WEB-INF/jsp/add-experiment.jsp").forward(request, response);
+//        } else if("search-by-freq".equals(action)){
+            
         } else if ("results".equals(action)) {
             viewResults(request, response);
         } else {
@@ -88,11 +92,7 @@ public class ExperimentServlet extends HttpServlet {
             pagerLink.addParameter("paginationstep", "" + paginationStep);
             request.setAttribute(RequestAttribute.PAGER.getName(),
                     experimentBean.getPager(page, paginationStep));
-            request.setAttribute(RequestAttribute.PAGER_LINK.getName(), pagerLink);
-            
-          
-//            request.setAttribute("experiments", experimentFacade.findPage(page, paginationStep));
-                        
+            request.setAttribute(RequestAttribute.PAGER_LINK.getName(), pagerLink);  
             request.setAttribute("experiments", experimentBean.getExperimentPage(page, paginationStep));
                         
             request.getRequestDispatcher("/WEB-INF/jsp/experiments.jsp?paginationstep=" + paginationStep).forward(request, response);

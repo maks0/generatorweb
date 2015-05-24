@@ -27,7 +27,7 @@
         font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
         height: 100%;
         margin-bottom: 30px;
-        
+
     }
     tr{
         font-size: 120%;
@@ -58,30 +58,18 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        <div class="col-md-1">
+                        <div class="col-md-2 col-sm-6">
                             <a href="exp" class="btn btn-default">
                                 <i class="fa fa-angle-left fa-lg"></i> Back
                             </a>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1 col-sm-6">
                             <a href="exp?action=results-to-excel&expid=${param.expid}" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>
                         </div>
-                        <!--                        <div class="col-md-offset-7 col-md-4">
-                                                    <form action="/admin/group" method="get">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" name="groupname" placeholder="Search by group name" value="${param.groupname}">
-                                                            <input type="hidden" name="action" value="search">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                                                            </span>
-                                                        </div>
-                                                    </form>
-                                                </div>-->
 
-
-                        <form action = "controller" class="col-md-offset-8 col-md-2" >
+                        <form action = "exp" class="col-md-offset-5 col-md-4 col-lg-offset-6 col-lg-3 text-center" style="margin-top: 5px">
                             <p> Show 
                                 <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
                                     <option value="5" ${5 == param.paginationstep ? 'selected="selected"' : ''}> 5 </option>
@@ -93,8 +81,25 @@
                                 records by a page
                             </p>
                             <input type="hidden" name="page" value="1"/>
+                            <input type="hidden" name="action" value="${param.action}"/>
+                            <input type="hidden" name="expid" value="${param.expid}"/>
                         </form>
+                            <%--
+                        <div class="col-md-4">
+                            <form action="/exp" method="get">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="freq" min="0" max="10E50"
+                                           placeholder="Search by frequncy" value="${param.freq}">
+                                    <input type="hidden" name="action" value="search-by-freq"/>
+                                    <input type="hidden" name="expid" value="expid"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
 
+                            --%>
                     </div>
                 </div>
 
@@ -116,20 +121,17 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
 </c:choose>
                 --%>
 
-
-
-
                 <c:choose>
                     <c:when test="${not empty requestScope.spectrum}">
                         <table class="table table-striped tableborder col-md-10 text-center">
                             <thead>
                             <th class="text-center">
                                 Frequency, Hz
-                                <div class="smalltext">Частота, Гц</div>
+                            <div class="smalltext">Частота, Гц</div>
                             </th>
                             <th class="text-center">
                                 Voltage, V
-                                <div class="smalltext">Напруга, В</div>
+                            <div class="smalltext">Напруга, В</div>
                             </th>
                             </thead>
 
@@ -149,12 +151,7 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                         <h1 class="text-center">No Results Found</h1>
                     </c:otherwise>
                 </c:choose>
-
-
-
-
-
-
+                        
                 <div class=" col-md-12">
                     <%@ include file="../partials/pagination.jspf" %>
                 </div>
@@ -167,8 +164,6 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                    </ul>
                </nav>
                 --%>
-
-
                 <%--
                 <footer>
                      <%@ include file="../partials/footer.jspf" %>

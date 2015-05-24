@@ -28,7 +28,7 @@
         font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
         height: 100%;
         margin-bottom: 30px;
-        
+
     }
     tr{
         font-size: 120%;
@@ -50,46 +50,36 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Spectrums</title>
-        <!--        <link href="assets/css/bootstrap.min.css" rel="stylesheet">-->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <!--        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+<!--        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">-->
+<!--                        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
         <link rel="icon" href="http://www.veryicon.com/icon/ico/System/Multipurpose%20Alphabet/Letter%20M%20orange.ico">
     </head>
     <body>
 
         <div class="row row-fix">
             <div class="col-md-offset-1 col-md-10 ">
-                <!--                <div class="text-center">-->
-                <h1 class="text-center">
-                    Experiments
-                </h1>
+                <h1 class="text-center">Experiments</h1>
                 <h3 class="text-center">Експерименти</h3>
-                <!--                </div>-->
-
+                
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class="col-md-1">
+                        <div class=" col-md-3 col-lg-2 text-center">
                             <a href="exp?action=exp-to-xls" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>
                         </div>
-                        <!--                        <div class="col-md-offset-7 col-md-4">
-                                                    <form action="/admin/group" method="get">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" name="groupname" placeholder="Search by group name" value="${param.groupname}">
-                                                            <input type="hidden" name="action" value="search">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                                                            </span>
-                                                        </div>
-                                                    </form>
-                                                </div>-->
 
-
-                        <form action = "exp" class="col-md-offset-8 col-md-2" >
+                        <div class="col-md-1 text-center">
+                            <a href="exp?action=add-exp" class="btn btn-default">
+                                Add new experiment data <i class="fa fa-upload"></i>
+                            </a>
+                        </div>
+                        <form action = "exp" class="col-md-offset-4 col-md-4 col-lg-offset-6 col-lg-3 text-center" style="margin-top: 5px">
                             <p> Show 
-                                <select name ="paginationstep" id="myselect" onchange="this.form.submit()" >
+                                <select class="selectpicker" name ="paginationstep" id="myselect" onchange="this.form.submit()" >
                                     <option value="5" ${5 == param.paginationstep ? 'selected="selected"' : ''}> 5 </option>
                                     <option value="10" ${10 == param.paginationstep ? 'selected="selected"' : ''}> 10 </option>
                                     <option value="20" ${20 == param.paginationstep ? 'selected="selected"' : ''}> 20 </option>
@@ -135,15 +125,15 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                     <thead>
                     <th class="col-md-2 text-center">
                         Start date and time
-                        <div class="smalltext">Початок експеременту</div>
+                    <div class="smalltext">Початок експеременту</div>
                     </th>
-                    <th class="col-md-2 text-center">
+                    <th class="col-md-2 text-center hidden-sm hidden-xs">
                         Measurement Device
-                        <div class="smalltext">Вимірювальний пристрій</div>
+                    <div class="smalltext">Вимірювальний пристрій</div>
                     </th>
-                    <th class="col-md-5 text-center">
+                    <th class="col-md-5 text-center hidden-xs">
                         Comment
-                        <div class="smalltext">Коментар</div>
+                    <div class="smalltext">Коментар</div>
                     </th>
                     <th class="col-md-1 text-center smalltext">
                         Показати результат
@@ -159,8 +149,8 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                                                     value="${array.beginTime}" />
                                 </td>
 
-                                <td>${array.measurementDeviceModel}</td>
-                                <td>${array.comment}</td>
+                                <td class="hidden-sm hidden-xs">${array.measurementDeviceModel}</td>
+                                <td class="hidden-xs">${array.comment}</td>
                                 <td> 
                                     <a href="exp?action=results&expid=${array.id}" class="btn btn-default">View results</a>
                                 </td>
@@ -180,9 +170,17 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
         <%--        <footer class="footer">
                     <%@ include file="../partials/footer.jspf" %>
         </footer>--%>
+        
+                        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+                                <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<!--                        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
+        
+<!--        <link href="assets/css/bootstrap-select.css"
+              rel="stylesheet">
 
         <script src="assets/js/jquery-1.11.2.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
-
+        <script src="assets/js/bootstrap-select.min.js"></script>
+        <script>$('.selectpicker').selectpicker();</script>-->
     </body>
 </html>
