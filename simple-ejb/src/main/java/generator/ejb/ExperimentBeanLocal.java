@@ -8,8 +8,10 @@ package generator.ejb;
 import generator.Spectrum;
 import generator.dto.ExperimentDTO;
 import generator.util.Pager;
+import java.io.IOException;
 import java.util.Collection;
 import javax.ejb.Local;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -29,4 +31,6 @@ public interface ExperimentBeanLocal {
     Collection<Spectrum> getResults(int experimentId);
     
     Collection<ExperimentDTO> getAllExperiments();
+    
+    void addExperiment(Part filePart) throws IOException;
 }

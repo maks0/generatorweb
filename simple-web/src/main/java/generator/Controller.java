@@ -5,6 +5,7 @@
  */
 package generator;
 
+import generator.ejb.ExperimentBeanLocal;
 import generator.util.ExcelExport;
 import java.io.*;
 import java.text.ParseException;
@@ -33,42 +34,46 @@ public class Controller extends HttpServlet {
 
     @EJB
     private SpectrumFacadeLocal spectrumFacade;
+    
+    @EJB
+    private ExperimentBeanLocal experimentBeanLocal;
 
     private final static Logger LOGGER
             = Logger.getLogger(Controller.class.getCanonicalName());
 
-//        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        response.setContentType("text/html;charset=UTF-8");
-//        PrintWriter out = response.getWriter();
-//        try {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet TestServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            
-//            String file = request.getParameter("file");
-//            
-//                    
-//
-////		out.println("<h1>findall=" + spectrumFacade.findAll()+ "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        } finally {
-//            out.close();
-//        }
-//    }
-    protected void processRequest(HttpServletRequest request,
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet TestServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            
+        final Part filePart = request.getPart("file");
+            experimentBeanLocal.addExperiment(filePart);
+            
+
+            out.println("<h1>Sended</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
+    }
+    protected void processRequestOld(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         // Create path components to save the file
-        final String path = File.separator +"home" + File.separator + "maks";// request.getParameter("destination");
+        final String path = "mytemp";
+//File.separator +"home" + File.separator + "maks";// request.getParameter("destination");
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
