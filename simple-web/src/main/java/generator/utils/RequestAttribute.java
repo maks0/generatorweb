@@ -1,7 +1,7 @@
 package generator.utils;
 
 /**
- * Created by happy on 27/04/2015.
+ * @author maks
  */
 public enum RequestAttribute {
     PAGE_CONTENT("pageContent"),

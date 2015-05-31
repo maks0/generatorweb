@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,23 +23,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author maks
  */
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Experiment.findAll", query = "SELECT e FROM Experiment e ORDER BY e.datetime DESC"),
-    @NamedQuery(name = "Experiment.findByDatetime", query = "SELECT e FROM Experiment e WHERE e.datetime = :datetime"),
-    @NamedQuery(name = "Experiment.findByComment", query = "SELECT e FROM Experiment e WHERE e.comment = :comment"),
-    @NamedQuery(name = "Experiment.findById", query = "SELECT e FROM Experiment e WHERE e.id = :id")})
+        @NamedQuery(name = "Experiment.findAll", query = "SELECT e FROM Experiment e ORDER BY e.begin DESC"),
+        @NamedQuery(name = "Experiment.findByBegin", query = "SELECT e FROM Experiment e WHERE e.begin = :begin"),
+        @NamedQuery(name = "Experiment.findByComment", query = "SELECT e FROM Experiment e WHERE e.comment = :comment"),
+        @NamedQuery(name = "Experiment.findByBeginAndComment", query = "SELECT e FROM Experiment e WHERE (e.comment = :comment) and (e.begin = :begin)"),
+        @NamedQuery(name = "Experiment.findByBeginDeviceComment", query = "SELECT e FROM Experiment e WHERE (e.comment = :comment) and (e.begin = :begin) and (e.device = :device)"),
+        @NamedQuery(name = "Experiment.findById", query = "SELECT e FROM Experiment e WHERE e.id = :id")})
 public class Experiment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "begin_time")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date datetime;
+    private Date begin;
     @Size(max = 250)
+    @Column(name = "comments")
     private String comment;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,15 +63,15 @@ public class Experiment implements Serializable {
 
     public Experiment(Integer id, Date datetime) {
         this.id = id;
-        this.datetime = datetime;
+        this.begin = datetime;
     }
 
     public Date getDatetime() {
-        return datetime;
+        return begin;
     }
 
     public void setDatetime(Date datetime) {
-        this.datetime = datetime;
+        this.begin = datetime;
     }
 
     public String getComment() {
@@ -127,5 +131,5 @@ public class Experiment implements Serializable {
     public String toString() {
         return "generator.Experiment[ id=" + id + " ]";
     }
-    
+
 }

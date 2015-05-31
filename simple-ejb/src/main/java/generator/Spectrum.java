@@ -1,21 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package generator;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Spectrum.findAll", query = "SELECT s FROM Spectrum s ORDER BY s.frequency"),
     @NamedQuery(name = "Spectrum.findById", query = "SELECT s FROM Spectrum s WHERE s.id = :id"),
-    @NamedQuery(name = "Spectrum.findByVoltage", query = "SELECT s FROM Spectrum s WHERE s.voltage = :voltage"),
+    @NamedQuery(name = "Spectrum.findByMagnitude", query = "SELECT s FROM Spectrum s WHERE s.magnitude = :magnitude"),
     @NamedQuery(name = "Spectrum.findByExperiment", query = "SELECT s FROM Spectrum s WHERE s.experiment = :experiment ORDER BY s.frequency"),
     @NamedQuery(name = "Spectrum.findByFrequency", query = "SELECT s FROM Spectrum s WHERE s.frequency = :frequency")})
 public class Spectrum implements Serializable {
@@ -35,13 +21,13 @@ public class Spectrum implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
-    @NotNull
-    private int voltage;
+    @Column(name = "magnitude")
+    private double magnitude;
     @Basic(optional = false)
-    @NotNull
-    private int frequency;
+//    @NotNull
+    private double frequency;
     @JoinColumn(name = "experiment", referencedColumnName = "id")
     @ManyToOne
     private Experiment experiment;
@@ -49,37 +35,41 @@ public class Spectrum implements Serializable {
     public Spectrum() {
     }
 
-    public Spectrum(Integer id) {
+    public Spectrum(Long id) {
         this.id = id;
     }
 
-    public Spectrum(Integer id, int voltage, int frequency) {
+    public Spectrum(Long id, double frequency, double magnitude) {
         this.id = id;
-        this.voltage = voltage;
+        this.magnitude = magnitude;
+        this.frequency = frequency;
+    }
+    public Spectrum(double frequency, double magnitude) {
+        this.magnitude = magnitude;
         this.frequency = frequency;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getVoltage() {
-        return voltage;
+    public double getMagnitude() {
+        return magnitude;
     }
 
-    public void setVoltage(int voltage) {
-        this.voltage = voltage;
+    public void setMagnitude(double magnitude) {
+        this.magnitude = magnitude;
     }
 
-    public int getFrequency() {
+    public double getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(int frequency) {
+    public void setFrequency(double frequency) {
         this.frequency = frequency;
     }
 

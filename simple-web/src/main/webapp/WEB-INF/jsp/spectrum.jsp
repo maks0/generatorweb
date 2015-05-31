@@ -40,8 +40,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Spectrums</title>
-        <!--        <link href="assets/css/bootstrap.min.css" rel="stylesheet">-->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <%--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">--%>
         <!--        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link rel="icon" href="http://www.veryicon.com/icon/ico/System/Multipurpose%20Alphabet/Letter%20M%20orange.ico">
@@ -130,8 +130,8 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                             <div class="smalltext">Частота, Гц</div>
                             </th>
                             <th class="text-center">
-                                Voltage, V
-                            <div class="smalltext">Напруга, В</div>
+                                Magnitude, dB
+                            <div class="smalltext">Величина, дБ</div>
                             </th>
                             </thead>
 
@@ -139,7 +139,7 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                                 <c:forEach var = "array" items = "${requestScope.spectrum}">
                                     <tr>
                                         <td>${array.frequency}</td>
-                                        <td>${array.voltage}</td>
+                                        <td>${array.magnitude}</td>
                                     </tr>
                                 </c:forEach> 
                             </tbody>
@@ -155,20 +155,6 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
                 <div class=" col-md-12">
                     <%@ include file="../partials/pagination.jspf" %>
                 </div>
-                <%--               <nav>
-                   <ul class="pager custom-pager col-md-12">
-                       <li><a href="controller?page=1&paginationstep=${param.paginationstep}" > First </a></li>
-                       <li><a href="controller?page=${param.page - 1}&paginationstep=${param.paginationstep}" > Previous </a></li>
-                       <li><a href="controller?page=${param.page + 1}&paginationstep=${param.paginationstep}"> Next</a></li>
-                       <li><a href="controller?page=last&paginationstep=${param.paginationstep}" > Last </a></li>
-                   </ul>
-               </nav>
-                --%>
-                <%--
-                <footer>
-                     <%@ include file="../partials/footer.jspf" %>
-                </footer>
-                --%>
             </div>
         </div>
         <script src="assets/js/jquery-1.11.2.min.js"></script>

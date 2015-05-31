@@ -5,6 +5,7 @@
  */
 package generator;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,9 @@ public interface ExperimentFacadeLocal {
     int count();
     
     List<Experiment> findPage(int pageNumber, int paginationStep);
+
+//    Experiment find(Date begin, String comment);
+
+    Experiment find(Date begin, Measurementdevice device, String comment);
     
 }

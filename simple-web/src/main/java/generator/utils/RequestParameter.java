@@ -1,7 +1,7 @@
 package generator.utils;
 
 /**
- * @author Kyrylo Berehovyi
+ * @author maks
  */
 public enum RequestParameter {
     ID("id"),

@@ -7,7 +7,9 @@ package generator;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -25,6 +27,17 @@ public class MeasurementdeviceFacade extends AbstractFacade<Measurementdevice> i
 
     public MeasurementdeviceFacade() {
         super(Measurementdevice.class);
+    }
+
+    public Measurementdevice findBySerialNumber (String serialNumber){
+        try {
+            TypedQuery<Measurementdevice> query = em.createNamedQuery(
+                    "Measurementdevice.findBySerialnumber", Measurementdevice.class);
+            query.setParameter("serialnumber", serialNumber);
+            return query.getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }
     }
     
 }

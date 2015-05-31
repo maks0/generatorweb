@@ -28,5 +28,6 @@ public interface MeasurementdeviceFacadeLocal {
     List<Measurementdevice> findRange(int[] range);
 
     int count();
-    
+
+    Measurementdevice findBySerialNumber (String serialNumber);
 }

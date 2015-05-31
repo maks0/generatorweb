@@ -5,6 +5,7 @@
  */
 package generator;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,4 +38,14 @@ public class ExperimentFacade extends AbstractFacade<Experiment> implements Expe
         query.setMaxResults(paginationStep);
         return query.getResultList();
     }
+
+    public Experiment find(Date begin, Measurementdevice device, String comment) {
+        TypedQuery<Experiment> query = em.createNamedQuery("Experiment.findByBeginDeviceComment", Experiment.class);
+        query.setParameter("begin", begin);
+        query.setParameter("comment", comment);
+        query.setParameter("device", device);
+        return query.getSingleResult();
+    }
+
+
 }

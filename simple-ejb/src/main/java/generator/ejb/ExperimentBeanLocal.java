@@ -5,11 +5,14 @@
  */
 package generator.ejb;
 
+import generator.Measurementdevice;
 import generator.Spectrum;
 import generator.dto.ExperimentDTO;
 import generator.util.Pager;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 import javax.servlet.http.Part;
 
@@ -31,6 +34,11 @@ public interface ExperimentBeanLocal {
     Collection<Spectrum> getResults(int experimentId);
     
     Collection<ExperimentDTO> getAllExperiments();
-    
-    void addExperiment(Part filePart) throws IOException;
+
+    void addExperiment(Date begin, int deviceId, List <Spectrum> spectrumList, String comment);
+
+    void addExperiment(Date begin, String deviceModel,
+                       String deviceSerialNumber, List <Spectrum> spectrumList, String comment);
+
+    void addExperiment(Date begin, String deviceSerialNumber, List <Spectrum> spectrumList, String comment);
 }

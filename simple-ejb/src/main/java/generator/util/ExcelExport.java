@@ -18,7 +18,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,10 +33,6 @@ public class ExcelExport {
     public File exportSpectrum (String header, Collection<Spectrum> rows) throws IOException {
         return writeSpectrum(header, createNewFile(), rows);
     }
-        
-//    public File exportSpectrum (String header, Collection<Spectrum> rows) throws IOException {
-//        return writeSpectrum(header, createNewFile(), rows);
-//    }
         
     public File exportExperiments (Collection<ExperimentDTO> rows) throws IOException {
         return writeExperiments(createNewFile(), rows);
@@ -120,17 +115,17 @@ public class ExcelExport {
         
         Row tableHeader = sheet.createRow(2);
         tableHeader.createCell(0).setCellValue("Frequency, Hz");
-        tableHeader.createCell(1).setCellValue("Voltage, V");
+        tableHeader.createCell(1).setCellValue("Magnitude, dB");
                 
         Row tableHeaderUkr = sheet.createRow(3);
         tableHeaderUkr.createCell(0).setCellValue("Частота, Гц");
-        tableHeaderUkr.createCell(1).setCellValue("Напруга, В");
+        tableHeaderUkr.createCell(1).setCellValue("Величина, дБ");
         int rowNum = 4;
         for (Iterator<Spectrum> it = spectrum.iterator(); it.hasNext();) {
             Spectrum dataRow = it.next();
             Row row = sheet.createRow(rowNum);
             row.createCell(0).setCellValue(dataRow.getFrequency());
-            row.createCell(1).setCellValue(dataRow.getVoltage());
+            row.createCell(1).setCellValue(dataRow.getMagnitude());
             rowNum++;
         }
     }

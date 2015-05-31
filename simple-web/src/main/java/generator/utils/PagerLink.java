@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Kyrylo Berehovyi
+ * @author maks
  */
 
 public class PagerLink {

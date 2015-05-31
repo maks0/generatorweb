@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package generator;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SpectrumSiteUser.findByUsername", query = "SELECT s FROM SpectrumSiteUser s WHERE s.username = :username")})
 public class SpectrumSiteUser implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Недопустимый адрес электронной почты")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Недопустимый адрес электронной почты")//if the field contains email address consider using this annotation to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
@@ -42,6 +34,9 @@ public class SpectrumSiteUser implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     private String username;
+    @Column(name = "role")
+    @Min(value = 0)
+    private Integer role;
 
     public SpectrumSiteUser() {
     }
@@ -79,6 +74,14 @@ public class SpectrumSiteUser implements Serializable {
         this.username = username;
     }
 
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -103,5 +106,5 @@ public class SpectrumSiteUser implements Serializable {
     public String toString() {
         return "generator.SpectrumSiteUser[ email=" + email + " ]";
     }
-    
+
 }

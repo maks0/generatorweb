@@ -1,9 +1,6 @@
 package generator.ejb;
 
-import generator.Experiment;
-import generator.ExperimentFacadeLocal;
-import generator.Spectrum;
-import generator.SpectrumFacadeLocal;
+import generator.*;
 import generator.dto.ExperimentDTO;
 import generator.util.PageCalculator;
 import generator.util.Pager;
@@ -18,17 +15,17 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
+import javax.naming.NamingException;
+import javax.persistence.NoResultException;
 import javax.servlet.http.Part;
+import javax.transaction.*;
 
 /**
  *
@@ -38,10 +35,13 @@ import javax.servlet.http.Part;
 public class ExperimentBean implements ExperimentBeanLocal {
 
     @EJB
-    ExperimentFacadeLocal experimentFacade;
+    private ExperimentFacadeLocal experimentFacade;
 
     @EJB
-    SpectrumFacadeLocal spectrumFacadeLocal;
+    private SpectrumFacadeLocal spectrumFacadeLocal;
+
+    @EJB
+    private MeasurementdeviceFacadeLocal deviceFacade;
 
     @Override
     public Collection<Spectrum> getResults(int experimentId, int page, int pStep) {
@@ -92,77 +92,102 @@ public class ExperimentBean implements ExperimentBeanLocal {
         return dtoList;
     }
 
-    public void addExperiment(Part filePart) throws IOException {
-
-        OutputStream out = null;
-        BufferedReader reader = null;
-
-        try {
-            reader = new BufferedReader(new InputStreamReader(filePart.getInputStream()));
-
-            String line = reader.readLine();
-            while (line != null) {
-                //System.out.println(line);
-                addResult(line);
-            }
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-            if (reader != null) {
-                reader.close();
-            }
-        }
-    }
-
-    private File createNewFile() {
-        String directory = "mytemp";
-        if (!(Files.isDirectory(Paths.get(directory)))) {
-            new File(directory).mkdirs();
-        }
-
-        String time = ((Long) Calendar.getInstance().getTimeInMillis()).toString();
-        String filePath = directory + File.separator + "Uploaded" + time + ".txt";
-        return new File(filePath);
-    }
-    
-//    private double[][] convertToArray(String[] lines){
-//        return convertToArray(lines, 0);
+//    public void addExperiment(Date begin, Measurementdevice device, List <Spectrum> spectrumList, String comment){
+//
+//    }
+//    public void addExperiment(Date begin, Measurementdevice device, List <Spectrum> spectrumList){
+//
 //    }
 
-//    private double[][] convertToArray(String[] lines, int fromIndex) {
-//
-//        ArrayList<double[]> sig = new ArrayList<double[]>();
-//        Pattern patt = Pattern.compile("^\\s*(\\S+)\\s+(\\S+)\\s+(.*)$");
-//        Matcher match;
-//        for (int i = fromIndex; i < lines.length; i++) {
-//            try {
-//                match = patt.matcher(lines[i]); // ////
-//                match.find();
-//                sig.add(new double[]{Double.parseDouble(match.group(1)),
-//                    Double.parseDouble(match.group(2))});
-//            } catch (NumberFormatException e) {
-//                continue; //it's ok
-//            } 
-//            
-//            
-////IllegalStateException e
-////                                }    catch (IndexOutOfBoundsException e ){
-////                                
-//
+    public void addExperiment(Date begin, int deviceId, List <Spectrum> spectrumList, String comment){
+        //TODO check for not null
+        Measurementdevice device = deviceFacade.find(deviceId);
+        if (device == null){
+            throw new InvalidEntityException("Can't find device with ID = " + deviceId);
+        }
+        Experiment experiment = new Experiment();
+        experiment.setDatetime(begin);
+        experiment.setDevice(device);
+        experiment.setComment(comment);
+        experimentFacade.create(experiment);
+        Iterator <Spectrum> spectrumIterator = spectrumList.iterator();
+        while (spectrumIterator.hasNext()){
+            Spectrum spectrum = spectrumIterator.next();
+            spectrum.setExperiment(experiment);
+            spectrumFacadeLocal.create(spectrum);
+        }
+    }
+
+    public void addExperiment(Date begin, String deviceModel,
+                              String deviceSerialNumber, List <Spectrum> spectrumList, String comment) {
+        //TODO check for not null
+
+        javax.transaction.UserTransaction user_tr =null;
+        Measurementdevice device = deviceFacade.findBySerialNumber(deviceSerialNumber);
+        if (device == null){
+            device = createDevice(deviceModel, deviceSerialNumber);
+        }
+        Experiment experiment = new Experiment();
+        experiment.setDatetime(begin);
+        experiment.setDevice(device);
+        experiment.setComment(comment);
+        experimentFacade.create(experiment);
+        Iterator <Spectrum> spectrumIterator = spectrumList.iterator();
+        while (spectrumIterator.hasNext()){
+            Spectrum spectrum = spectrumIterator.next();
+            spectrum.setExperiment(experiment);
+            spectrumFacadeLocal.create(spectrum);
+        }
+    }
+    private Measurementdevice createDevice (String deviceModel, String deviceSerialNumber){
+        Measurementdevice device = new Measurementdevice();
+        device.setSerialnumber(deviceSerialNumber);
+        device.setModel(deviceModel);
+        deviceFacade.create(device);
+        return device;
+    }
+
+
+    public void addExperiment(Date begin,
+                              String deviceSerialNumber, List <Spectrum> spectrumList, String comment){
+        //TODO check for not null
+//        try {
+
+            Measurementdevice device = deviceFacade.findBySerialNumber(deviceSerialNumber);
+            if (device == null){
+                throw new InvalidEntityException("Can't find device with SN = " + deviceSerialNumber);
+            }
+            Experiment experiment = new Experiment();
+            experiment.setDatetime(begin);
+            experiment.setDevice(device);
+            experiment.setComment(comment);
+            experimentFacade.create(experiment);
+            Iterator<Spectrum> spectrumIterator = spectrumList.iterator();
+            while (spectrumIterator.hasNext()) {
+                Spectrum spectrum = spectrumIterator.next();
+                spectrum.setExperiment(experiment);
+                spectrumFacadeLocal.create(spectrum);
+            }
+//        } catch (EJBTransactionRolledbackException e){
+////            if (e.getCause() instanceof NoResultException) {
+//                throw new InvalidEntityException("Can't find device with SN = " + deviceSerialNumber, e);
+////            } else {
+////                throw e;
+////            }
 //        }
-//        double[][] signal = new double[sig.size()][2];
-//        return sig.toArray(signal);
-//    }
+    }
     
     private boolean addResult (String line){
         try {
-        Pattern pattern = Pattern.compile("^\\s*([0-9Ee,.+-]{1,40})\\s+([0-9Ee,.+-]{1,40})\\s+(.*)$");
+           Pattern pattern = Pattern.compile("^\\s*([0-9Ee,\\.\\+\\-]{1,40})\\s+([0-9Ee,\\.\\+\\-]{1,40})(.*)$");
+//            Pattern pattern = Pattern.compile(
+//                    "^\\s*([0-9\\+\\-]{1,20},?\\.?[0-9Ee\\+\\-]{0,20})\\s+([0-9\\+\\-]{1,20},?\\.?[0-9Ee\\+\\-]{0,20})(.*)$");
         Matcher match = pattern.matcher(line);
         if (match.find()){
-            double x = Double.parseDouble(match.group(1));
-            double y = Double.parseDouble(match.group(2));
-            System.out.println("MATCH!!! X = " + x + " Y = " + y);
+            String firstColumn = match.group(1).replace(',', '.');
+            String secondColumn = match.group(2).replace(',', '.');
+            double x = Double.parseDouble(firstColumn);
+            double y = Double.parseDouble(secondColumn);
             return true;
         }
         } catch (NumberFormatException e){
@@ -171,10 +196,4 @@ public class ExperimentBean implements ExperimentBeanLocal {
         }
         return false;
     }
-
-//    public int countResults(int experimentId) {
-//        Experiment experiment = experimentFacade.find(experimentId);
-//
-//        return 1;
-//    }
 }
