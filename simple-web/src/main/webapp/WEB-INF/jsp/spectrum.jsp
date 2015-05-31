@@ -7,33 +7,33 @@
 --%>
 
 <!DOCTYPE html>
-<style type="text/css">
-    thead{
-        font-style: italic;
-        background-color: paleturquoise;
-        /*        border: 1px blue solid;*/
-    }
-    .tableborder{
-        border: 1px #d9edf7 solid;
-    }
-    .smalltext{
-        font-size: 75%
-    }
-    html {
-        height: 100%;
-        width: 97%;
-    }
-    body {
-        font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
-        height: 100%;
-        margin-bottom: 30px;
+<%--<style type="text/css">--%>
+    <%--thead{--%>
+        <%--font-style: italic;--%>
+        <%--background-color: paleturquoise;--%>
+        <%--/*        border: 1px blue solid;*/--%>
+    <%--}--%>
+    <%--.tableborder{--%>
+        <%--border: 1px #d9edf7 solid;--%>
+    <%--}--%>
+    <%--.smalltext{--%>
+        <%--font-size: 75%--%>
+    <%--}--%>
+    <%--html {--%>
+        <%--height: 100%;--%>
+        <%--width: 97%;--%>
+    <%--}--%>
+    <%--body {--%>
+        <%--font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;--%>
+        <%--height: 100%;--%>
+        <%--margin-bottom: 30px;--%>
 
-    }
-    tr{
-        font-size: 120%;
-    }
+    <%--}--%>
+    <%--tr{--%>
+        <%--font-size: 120%;--%>
+    <%--}--%>
 
-</style>
+<%--</style>--%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -43,6 +43,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <%--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">--%>
         <!--        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
+        <link rel="stylesheet" href="assets/css/custom.css">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link rel="icon" href="http://www.veryicon.com/icon/ico/System/Multipurpose%20Alphabet/Letter%20M%20orange.ico">
     </head>
@@ -58,12 +59,12 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
-                        <div class="col-md-2 col-sm-6">
+                        <div class="col-md-2 col-sm-6 col-xs-6">
                             <a href="exp" class="btn btn-default">
                                 <i class="fa fa-angle-left fa-lg"></i> Back
                             </a>
                         </div>
-                        <div class="col-md-1 col-sm-6">
+                        <div class="col-md-1 col-sm-6 co-xs-6 text-right">
                             <a href="exp?action=results-to-excel&expid=${param.expid}" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>

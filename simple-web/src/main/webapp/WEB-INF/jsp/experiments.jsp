@@ -8,49 +8,50 @@
 --%>
 
 <!DOCTYPE html>
-<style type="text/css">
-    thead{
-        font-style: italic;
-        background-color: paleturquoise;
-        /*        border: 1px blue solid;*/
-    }
-    .tableborder{
-        border: 1px #d9edf7 solid;
-    }
-    .smalltext{
-        font-size: 75%
-    }
-    html {
-        height: 100%;
-        width: 97%;
-    }
-    body {
-        font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;
-        height: 100%;
-        margin-bottom: 30px;
+<%--<style type="text/css">--%>
+    <%--thead{--%>
+        <%--font-style: italic;--%>
+        <%--background-color: paleturquoise;--%>
+        <%--/*        border: 1px blue solid;*/--%>
+    <%--}--%>
+    <%--.tableborder{--%>
+        <%--border: 1px #d9edf7 solid;--%>
+    <%--}--%>
+    <%--.smalltext{--%>
+        <%--font-size: 75%--%>
+    <%--}--%>
+    <%--html {--%>
+        <%--height: 100%;--%>
+        <%--width: 98%;--%>
+        <%--margin: auto;--%>
+    <%--}--%>
+    <%--body {--%>
+        <%--font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;--%>
+        <%--height: 100%;--%>
+        <%--margin-bottom: 30px;--%>
 
-    }
-    tr{
-        font-size: 120%;
-    }
-    .footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        /* Set the fixed height of the footer here */
-        height: 30px;
-        width: 99%;
-        background-color: #d9edf7;
-    }
+    <%--}--%>
+    <%--tr{--%>
+        <%--font-size: 120%;--%>
+    <%--}--%>
+    <%--.footer {--%>
+        <%--position: absolute;--%>
+        <%--bottom: 0;--%>
+        <%--width: 100%;--%>
+        <%--/* Set the fixed height of the footer here */--%>
+        <%--height: 30px;--%>
+        <%--width: 99%;--%>
+        <%--background-color: #d9edf7;--%>
+    <%--}--%>
 
-</style>
+<%--</style>--%>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Spectrums</title>
-
+        <link rel="stylesheet" href="assets/css/custom.css">
 <!--        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">-->
@@ -60,7 +61,7 @@
     <body>
 
         <div class="row row-fix">
-            <div class="col-md-offset-1 col-md-10 ">
+            <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
                 <h1 class="text-center">Experiments</h1>
                 <h3 class="text-center">Експерименти</h3>
                 

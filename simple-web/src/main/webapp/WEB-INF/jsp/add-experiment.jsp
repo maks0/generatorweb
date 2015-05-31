@@ -55,19 +55,18 @@
 
 
 
-                <div class="col-sm-12">
+                <div class="col-xs-12">
                     <p class="text-center" >
                         <a id="show_model" style="visibility: visible">To add new device click here (Натисніть тут щоб додати новий пристрій)</a>
                     </p>
 
 
                     <div class="control-group" style="visibility: hidden" id="model">
-                    <label class="control-label col-md-6 text-right" for="device">
-                        Measurement device model: 
-                        <br/> 
-                        Модель вимірювального пристрою:
+                    <label class="control-label col-sm-6 text-right" for="device">
+                        <div>Measurement device model:</div>
+                        <div>Модель вимірювального пристрою:</div>
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="text" id="device" name="device" placeholder="Device model (isn't mandatory)" maxlength="100"
                                class="form-control" value="${param.device}" minlength="3">
                     </div>
@@ -75,64 +74,59 @@
                         </div>
                 </div>
 
-                <div class="control-group col-sm-12">
-                    <label class="control-label col-md-6 text-right" for="device_sn">
-                        Measurement device serial number:
-                        <br/>
-                        Серійний номер вимірювального пристрою:
+                <div class="control-group col-xs-12">
+                    <label class="control-label col-sm-6 text-right" for="device_sn">
+                        <div>Measurement device serial number:</div>
+                        <div>Серійний номер вимірювального пристрою:</div>
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="text" id="device_sn" name="device_sn" placeholder="Device SN" maxlength="100" required
                                class="form-control" value="${param.device_sn}" minlength="3" autofocus>
                     </div>
                     <div class="help-block"></div>
                 </div>
 
-                <div class="control-group col-sm-12">
-                    <label class="control-label col-md-6 text-right" for="begin">
-                        Begin of experiment:
-                        <br/>
-                        Початок експерименту:
+                <div class="control-group col-xs-12">
+                    <label class="control-label col-sm-6 text-right" for="begin">
+                        <div>Begin of experiment:</div>
+                        <div>Початок експерименту:</div>
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="text" id="begin" name="begin" placeholder="Click here to choose date"
                                class="form-control" value="${param.begin}">
                     </div>
                 </div>
 
-                <div class="control-group col-sm-12">
-                    <label class="control-label col-md-6 text-right" for="comment">
-                        Comment: 
-                        <br/> 
-                        Коментар:
+                <div class="control-group col-xs-12">
+                    <label class="control-label col-sm-6 text-right" for="comment">
+                        <div>Comment:</div>
+                        <div>Коментар:</div>
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="text" id="comment" name="comment" placeholder="Comment" maxlength="250" 
                                class="form-control" value="${param.comment}">
                     </div>
                 </div>
                                    
 
-                <div class="control-group col-sm-12">
-                    <label class="control-label col-md-6 text-right" for="file">
-                        File: 
-                        <br/> 
-                        Файл:
+                <div class="control-group col-xs-12">
+                    <label class="control-label col-sm-6 text-right" for="file">
+                        <div>File:</div>
+                        <div>Файл:</div>
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="file" id="file" name="file" placeholder="Data file" required
-                               class="form-control" value="${param.file}">
+                               class="form-control" value="${param.file}" style="height: auto">
                     </div>
                 </div>
 
-                <div class="control-group col-sm-12">
-                    <label class="control-label col-md-6 text-right" for="input_email">
-                        Your email:
-                        <br/>
-                        Ваша адреса електронної пошти:
+                <div class="control-group col-xs-12">
+                    <label class="control-label col-sm-6 text-right" for="input_email">
+                        <div>Your email:</div>
+                        <div>Ваша адреса електронної пошти:</div>
                     </label>
 
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="email" data-validation-email-message="Incorrect email address. Неправильна адреса."
                                class="form-control" id="input_email" placeholder="Email" name="email"
                                minlength="5" data-validation-minlength-message="Incorrect email address. Неправильна адреса."
@@ -143,13 +137,12 @@
 
                 </div>
 
-                <div class="control-group col-sm-12">
-                    <label class="control-label col-md-6 text-right" for="inputPassword">
-                        Password:
-                        <br/>
-                        Пароль:
+                <div class="control-group col-xs-12">
+                    <label class="control-label col-sm-6 text-right" for="inputPassword">
+                        <div>Password:</div>
+                        <div>Пароль:</div>
                     </label>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <input type="password" id="inputPassword" name="password" class="form-control"
                                placeholder="Password" required  maxlength="60">
                     </div>
@@ -166,7 +159,6 @@
         <!--            <link href="assets/css/signin.css" rel="stylesheet">-->
         <!--                <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
         <%--<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">--%>
-        <%--<link href="/resources/css/font-awesome.min.css" rel="stylesheet">--%>
         <link href="assets/css/font-awesome.min.css" rel="stylesheet">
         <script src="assets/js/jquery-1.11.2.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
