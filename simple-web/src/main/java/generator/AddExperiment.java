@@ -2,12 +2,10 @@ package generator;
 
 import generator.ejb.ExperimentBeanLocal;
 import generator.ejb.SpectrumParserLocal;
-import generator.util.ExcelExport;
 
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -27,7 +25,7 @@ import javax.servlet.http.Part;
  */
 @WebServlet(name = "Controller", urlPatterns = {"/controller", "/add"})
 @MultipartConfig
-public class Controller extends HttpServlet {
+public class AddExperiment extends HttpServlet {
 
     @EJB
     private SpectrumParserLocal spectrumParserLocal;
@@ -39,7 +37,7 @@ public class Controller extends HttpServlet {
     private SpectrumSiteUserFacadeLocal userFacadeLocal;
 
     private final static Logger LOGGER
-            = Logger.getLogger(Controller.class.getCanonicalName());
+            = Logger.getLogger(AddExperiment.class.getCanonicalName());
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -56,11 +54,9 @@ public class Controller extends HttpServlet {
                 if (deviceModel == null || deviceModel.equals("")){
                     experimentBeanLocal.addExperiment(begin, request.getParameter("device_sn"),
                             spectrumParserLocal.parseSpectrum(filePart), request.getParameter("comment"));
-                    System.out.println("null");
                 } else {
                     experimentBeanLocal.addExperiment(begin, deviceModel, request.getParameter("device_sn"),
                             spectrumParserLocal.parseSpectrum(filePart), request.getParameter("comment"));
-                    System.out.println("not null");
                 }
                 response.sendRedirect("exp");
             } else {
@@ -97,8 +93,6 @@ public class Controller extends HttpServlet {
      */
     protected void processGetRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         response.sendRedirect("exp");
     }
 
@@ -108,7 +102,7 @@ public class Controller extends HttpServlet {
             Date date = dateFormat.parse(dateString);
             return date;
         } catch (ParseException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, "Can't covert to Date", ex);
+            Logger.getLogger(AddExperiment.class.getName()).log(Level.SEVERE, "Can't covert to Date", ex);
             return Calendar.getInstance().getTime();
         }
     }

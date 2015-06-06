@@ -1,7 +1,6 @@
 thead{
     font-style: italic;
     background-color: paleturquoise;
-    /*        border: 1px blue solid;*/
 }
 .tableborder{
     border: 1px #d9edf7 solid;
@@ -10,7 +9,6 @@ thead{
     font-size: 75%
 }
 html {
-    height: 100%;
     width: 98%;
     margin: auto;
 }

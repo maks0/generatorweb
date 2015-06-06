@@ -2,7 +2,7 @@ package generator.util;
 
 
 /**
- * @author Kyrylo Berehovyi
+ * @author maks
  */
 
 public class PageCalculator {

@@ -16,7 +16,7 @@ import javax.persistence.TypedQuery;
  * @author maks
  */
 @Stateless
-public class MeasurementdeviceFacade extends AbstractFacade<Measurementdevice> implements MeasurementdeviceFacadeLocal {
+public class MeasurementDeviceFacade extends AbstractFacade<Measurementdevice> implements MeasurementDeviceFacadeLocal {
     @PersistenceContext(unitName = "generator_generator-ejb_ejb_1.0PU")
     private EntityManager em;
 
@@ -25,7 +25,7 @@ public class MeasurementdeviceFacade extends AbstractFacade<Measurementdevice> i
         return em;
     }
 
-    public MeasurementdeviceFacade() {
+    public MeasurementDeviceFacade() {
         super(Measurementdevice.class);
     }
 
