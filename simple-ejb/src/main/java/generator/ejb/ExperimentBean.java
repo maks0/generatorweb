@@ -12,7 +12,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
- *
  * @author maks
  */
 @Stateless
@@ -77,19 +76,23 @@ public class ExperimentBean implements ExperimentBeanLocal {
     }
 
 
-    public void addExperiment(Date begin, int deviceId, List <Spectrum> spectrumList, String comment){
+    public void addExperiment(Date begin, int deviceId, List<Spectrum> spectrumList, String comment) {
         //TODO check for not null
         Measurementdevice device = deviceFacade.find(deviceId);
-        if (device == null){
+        if (device == null) {
             throw new InvalidEntityException("Can't find device with ID = " + deviceId);
+        }
+        if (spectrumList == null || spectrumList.isEmpty()) {
+            throw new InvalidEntityException("File doesn't contains two columns of values");
+//            throw new IllegalArgumentException("File doesn't contains two columns of values");
         }
         Experiment experiment = new Experiment();
         experiment.setDatetime(begin);
         experiment.setDevice(device);
         experiment.setComment(comment);
         experimentFacade.create(experiment);
-        Iterator <Spectrum> spectrumIterator = spectrumList.iterator();
-        while (spectrumIterator.hasNext()){
+        Iterator<Spectrum> spectrumIterator = spectrumList.iterator();
+        while (spectrumIterator.hasNext()) {
             Spectrum spectrum = spectrumIterator.next();
             spectrum.setExperiment(experiment);
             spectrumFacadeLocal.create(spectrum);
@@ -97,12 +100,16 @@ public class ExperimentBean implements ExperimentBeanLocal {
     }
 
     public void addExperiment(Date begin, String deviceModel,
-                              String deviceSerialNumber, List <Spectrum> spectrumList, String comment) {
+                              String deviceSerialNumber, List<Spectrum> spectrumList, String comment) {
         //TODO check for not null
 
-        javax.transaction.UserTransaction user_tr =null;
+        if (spectrumList == null || spectrumList.isEmpty()) {
+            throw new InvalidEntityException("File doesn't contains two columns of values");
+//            throw new IllegalArgumentException("File doesn't contains two columns of values");
+        }
+        javax.transaction.UserTransaction user_tr = null;
         Measurementdevice device = deviceFacade.findBySerialNumber(deviceSerialNumber);
-        if (device == null){
+        if (device == null) {
             device = createDevice(deviceModel, deviceSerialNumber);
         }
         Experiment experiment = new Experiment();
@@ -110,14 +117,15 @@ public class ExperimentBean implements ExperimentBeanLocal {
         experiment.setDevice(device);
         experiment.setComment(comment);
         experimentFacade.create(experiment);
-        Iterator <Spectrum> spectrumIterator = spectrumList.iterator();
-        while (spectrumIterator.hasNext()){
+        Iterator<Spectrum> spectrumIterator = spectrumList.iterator();
+        while (spectrumIterator.hasNext()) {
             Spectrum spectrum = spectrumIterator.next();
             spectrum.setExperiment(experiment);
             spectrumFacadeLocal.create(spectrum);
         }
     }
-    private Measurementdevice createDevice (String deviceModel, String deviceSerialNumber){
+
+    private Measurementdevice createDevice(String deviceModel, String deviceSerialNumber) {
         Measurementdevice device = new Measurementdevice();
         device.setSerialnumber(deviceSerialNumber);
         device.setModel(deviceModel);
@@ -127,22 +135,26 @@ public class ExperimentBean implements ExperimentBeanLocal {
 
 
     public void addExperiment(Date begin,
-                              String deviceSerialNumber, List <Spectrum> spectrumList, String comment){
+                              String deviceSerialNumber, List<Spectrum> spectrumList, String comment) {
         //TODO check for not null
-            Measurementdevice device = deviceFacade.findBySerialNumber(deviceSerialNumber);
-            if (device == null){
-                throw new InvalidEntityException("Can't find device with SN = " + deviceSerialNumber);
-            }
-            Experiment experiment = new Experiment();
-            experiment.setDatetime(begin);
-            experiment.setDevice(device);
-            experiment.setComment(comment);
-            experimentFacade.create(experiment);
-            Iterator<Spectrum> spectrumIterator = spectrumList.iterator();
-            while (spectrumIterator.hasNext()) {
-                Spectrum spectrum = spectrumIterator.next();
-                spectrum.setExperiment(experiment);
-                spectrumFacadeLocal.create(spectrum);
-            }
+        Measurementdevice device = deviceFacade.findBySerialNumber(deviceSerialNumber);
+        if (device == null) {
+            throw new InvalidEntityException("Can't find device with SN = " + deviceSerialNumber);
+        }
+        if (spectrumList == null || spectrumList.isEmpty()) {
+            throw new InvalidEntityException("File doesn't contains two columns of values");
+//            throw new IllegalArgumentException("File doesn't contains two columns of values");
+        }
+        Experiment experiment = new Experiment();
+        experiment.setDatetime(begin);
+        experiment.setDevice(device);
+        experiment.setComment(comment);
+        experimentFacade.create(experiment);
+        Iterator<Spectrum> spectrumIterator = spectrumList.iterator();
+        while (spectrumIterator.hasNext()) {
+            Spectrum spectrum = spectrumIterator.next();
+            spectrum.setExperiment(experiment);
+            spectrumFacadeLocal.create(spectrum);
+        }
     }
 }

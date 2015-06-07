@@ -65,7 +65,7 @@ public class AddExperiment extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/jsp/add-experiment.jsp").forward(request, response);
             }
         } catch (InvalidEntityException e){
-            request.setAttribute("errorMessage", "Sorry!" + e.getMessage() + ". Please, correct it and try again.");
+            request.setAttribute("errorMessage", "Sorry! " + e.getMessage() + ". Please, correct it and try again.");
             request.getRequestDispatcher("WEB-INF/jsp/add-experiment.jsp").forward(request, response);
         }
     }
