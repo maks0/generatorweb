@@ -48,6 +48,16 @@
             </div>
         </div>
 
+        <div class="col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8 panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-2 col-sm-6 col-xs-6">
+                    <a href="exp" class="btn btn-default">
+                        <i class="fa fa-angle-left fa-lg"></i> Back
+                    </a>
+                </div>
+            </div>
+        </div>
+
 
         <form class=" col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8 panel panel-default"
               method="post" action="add" enctype="multipart/form-data" id="form">
@@ -158,7 +168,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <!--            <link href="assets/css/signin.css" rel="stylesheet">-->
         <!--                <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
-        <%--<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">--%>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link href="assets/css/font-awesome.min.css" rel="stylesheet">
         <script src="assets/js/jquery-1.11.2.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>

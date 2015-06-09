@@ -7,33 +7,6 @@
 --%>
 
 <!DOCTYPE html>
-<%--<style type="text/css">--%>
-    <%--thead{--%>
-        <%--font-style: italic;--%>
-        <%--background-color: paleturquoise;--%>
-        <%--/*        border: 1px blue solid;*/--%>
-    <%--}--%>
-    <%--.tableborder{--%>
-        <%--border: 1px #d9edf7 solid;--%>
-    <%--}--%>
-    <%--.smalltext{--%>
-        <%--font-size: 75%--%>
-    <%--}--%>
-    <%--html {--%>
-        <%--height: 100%;--%>
-        <%--width: 97%;--%>
-    <%--}--%>
-    <%--body {--%>
-        <%--font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;--%>
-        <%--height: 100%;--%>
-        <%--margin-bottom: 30px;--%>
-
-    <%--}--%>
-    <%--tr{--%>
-        <%--font-size: 120%;--%>
-    <%--}--%>
-
-<%--</style>--%>
 <html>
     <head>
         <meta charset="utf-8">

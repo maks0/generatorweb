@@ -2,49 +2,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- 
-    Document   : Spectrum
-    Created on : 15.04.2015, 17:04:24
+    Document   : Experiment
+    Created on : 15.04.2015, 17:05:24
     Author     : maks
 --%>
 
 <!DOCTYPE html>
-<%--<style type="text/css">--%>
-    <%--thead{--%>
-        <%--font-style: italic;--%>
-        <%--background-color: paleturquoise;--%>
-        <%--/*        border: 1px blue solid;*/--%>
-    <%--}--%>
-    <%--.tableborder{--%>
-        <%--border: 1px #d9edf7 solid;--%>
-    <%--}--%>
-    <%--.smalltext{--%>
-        <%--font-size: 75%--%>
-    <%--}--%>
-    <%--html {--%>
-        <%--height: 100%;--%>
-        <%--width: 98%;--%>
-        <%--margin: auto;--%>
-    <%--}--%>
-    <%--body {--%>
-        <%--font-family: "Open Sans","Helvetica Neue",Arial,sans-serif;--%>
-        <%--height: 100%;--%>
-        <%--margin-bottom: 30px;--%>
 
-    <%--}--%>
-    <%--tr{--%>
-        <%--font-size: 120%;--%>
-    <%--}--%>
-    <%--.footer {--%>
-        <%--position: absolute;--%>
-        <%--bottom: 0;--%>
-        <%--width: 100%;--%>
-        <%--/* Set the fixed height of the footer here */--%>
-        <%--height: 30px;--%>
-        <%--width: 99%;--%>
-        <%--background-color: #d9edf7;--%>
-    <%--}--%>
-
-<%--</style>--%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -67,13 +31,13 @@
                 
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div class=" col-md-3 col-lg-2 text-center">
+                        <div class="col-xs-2 col-md-3 col-lg-2 text-center">
                             <a href="exp?action=exp-to-xls" class="btn btn-default">
                                 Export to excel file <i class="fa fa-download"></i>
                             </a>
                         </div>
 
-                        <div class="col-md-1 text-center">
+                        <div class="col-xs-10 col-md-1 text-right">
                             <a href="exp?action=add-exp" class="btn btn-default">
                                 Add new experiment data <i class="fa fa-upload"></i>
                             </a>
@@ -174,13 +138,13 @@ or <a href="controller?action=register&page=${param.page}&paginationstep=${param
         
                         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
                                 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-<!--                        <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
+        <script src="assets/js/jquery-1.11.2.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
         
 <!--        <link href="assets/css/bootstrap-select.css"
               rel="stylesheet">
 
-        <script src="assets/js/jquery-1.11.2.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
+
         <script src="assets/js/bootstrap-select.min.js"></script>
         <script>$('.selectpicker').selectpicker();</script>-->
     </body>
